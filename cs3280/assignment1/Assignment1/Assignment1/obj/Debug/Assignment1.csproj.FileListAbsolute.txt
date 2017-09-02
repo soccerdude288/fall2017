@@ -1,1 +1,9 @@
 M:\fall2017\cs3280\assignment1\Assignment1\Assignment1\bin\Debug\Assignment1.exe.config
+M:\fall2017\cs3280\assignment1\Assignment1\Assignment1\bin\Debug\Assignment1.exe
+M:\fall2017\cs3280\assignment1\Assignment1\Assignment1\bin\Debug\Assignment1.pdb
+M:\fall2017\cs3280\assignment1\Assignment1\Assignment1\obj\Debug\Assignment1.csprojResolveAssemblyReference.cache
+M:\fall2017\cs3280\assignment1\Assignment1\Assignment1\obj\Debug\Assignment1.Form1.resources
+M:\fall2017\cs3280\assignment1\Assignment1\Assignment1\obj\Debug\Assignment1.Properties.Resources.resources
+M:\fall2017\cs3280\assignment1\Assignment1\Assignment1\obj\Debug\Assignment1.csproj.GenerateResource.Cache
+M:\fall2017\cs3280\assignment1\Assignment1\Assignment1\obj\Debug\Assignment1.exe
+M:\fall2017\cs3280\assignment1\Assignment1\Assignment1\obj\Debug\Assignment1.pdb
