@@ -41,7 +41,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:orientation="vertical"android:layout_margin="5dp">
+            android:orientation="vertical"
+            android:layout_margin="5dp">
 
             <FrameLayout
                 android:id="@+id/fragmentContainer3"
@@ -73,14 +74,14 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/loadF2"
+            android:id="@+id/btnloadF2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Load Fragment 2" />
 
         <Button
-            android:id="@+id/loadf4"
+            android:id="@+id/btnloadF4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -93,14 +94,14 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/loadF3"
+            android:id="@+id/btnloadF3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Load Fragment 3" />
 
         <Button
-            android:id="@+id/switch34"
+            android:id="@+id/btnswitch34"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
