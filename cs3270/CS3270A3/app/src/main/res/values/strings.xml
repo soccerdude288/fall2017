@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">CS3270A3</string>
+    <string name="title">Rock, Paper, Scissors</string>
+    <string name="author">By Taylor Earl</string>
+    <string name="pick">My Pick</string>
+    <string name="phonePick">Phone Pick is</string>
+    <string name="gamesPlayed">Games Played</string>
+    <string name="pwinCount">Phone Win Count</string>
+    <string name="mwinCount">My Win Count</string>
+    <string name="tieGame">Tie Games</string>
+    <string name="reset">Reset Counts</string>
+
+</resources>
