@@ -9,10 +9,12 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="25dp"
         android:text="@string/title" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="25dp"
         android:text="@string/author" />
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,6 +24,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="15dp"
+            android:layout_marginRight="5dp"
             android:text="@string/pick" />
 
         <Button
@@ -54,17 +58,24 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="25sp"
             android:text="@string/phonePick" />
 
         <TextView
             android:id="@+id/phonePick"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="25sp"
+            android:textColor="@color/colorAccent"
+            android:layout_marginLeft="5dp"
             android:text="\?"/>
     </LinearLayout>
 
     <TextView
         android:id="@+id/result"
+        android:textSize="25sp"
+        android:text="-"
+        android:textColor="@color/colorAccent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 </LinearLayout>

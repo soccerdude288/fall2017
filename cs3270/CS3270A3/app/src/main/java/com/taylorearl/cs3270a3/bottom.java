@@ -80,6 +80,7 @@ public class bottom extends Fragment {
                 reset();
             }
         });
+        reset.setBackgroundResource(android.R.drawable.btn_default);
     }
 
     public void gamePlayed(){

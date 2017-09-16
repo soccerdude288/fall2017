@@ -1,6 +1,8 @@
 package com.taylorearl.cs3270a3;
 
 
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -54,9 +56,14 @@ public class top extends Fragment {
         paper = (Button)getView().findViewById(R.id.btnPaper);
         scissors = (Button)getView().findViewById(R.id.btnScissors);
 
+        rock.setBackgroundResource(android.R.drawable.btn_default);
+        paper.setBackgroundResource(android.R.drawable.btn_default);
+        scissors.setBackgroundResource(android.R.drawable.btn_default);
+
         rock.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
                 playerChoice = Opt.ROCK;
+                buttonColor(rock);
                 generateChoice();
                 setPhonePick();
                 generateResult(playerChoice, computerChoice);
@@ -66,6 +73,7 @@ public class top extends Fragment {
         paper.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
                 playerChoice = Opt.PAPER;
+                buttonColor(paper);
                 generateChoice();
                 setPhonePick();
                 generateResult(playerChoice, computerChoice);
@@ -75,6 +83,7 @@ public class top extends Fragment {
         scissors.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
                 playerChoice = Opt.SCISSORS;
+                buttonColor(scissors);
                 generateChoice();
                 setPhonePick();
                 generateResult(playerChoice, computerChoice);
@@ -93,6 +102,14 @@ public class top extends Fragment {
         result.setText(results.name());
     }
 
+    private void buttonColor(Button btn){
+        rock.setBackgroundResource(android.R.drawable.btn_default);
+        paper.setBackgroundResource(android.R.drawable.btn_default);
+        scissors.setBackgroundResource(android.R.drawable.btn_default);
+
+        btn.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+    }
+
     private void generateChoice(){
         final Random rand = new Random();
         int compChoice = rand.nextInt(3) + 1; // uniformly distributed int from 1 to 6
@@ -108,7 +125,7 @@ public class top extends Fragment {
         }
     }
 
-    private void generateResult(Opt computer, Opt player){
+    private void generateResult(Opt player, Opt computer){
         MainActivity ma = (MainActivity) getActivity();
         if(computer == Opt.PAPER){
             if(player == Opt.PAPER){
