@@ -59,7 +59,8 @@
         <TextView
             android:id="@+id/phonePick"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="\?"/>
     </LinearLayout>
 
     <TextView

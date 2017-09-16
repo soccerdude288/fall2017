@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import java.util.Random;
 
@@ -20,11 +21,17 @@ public class top extends Fragment {
         ROCK, PAPER, SCISSORS
     }
 
+    public enum Result{
+        WIN, LOSE, TIE
+    }
+
     Button rock;
     Button paper;
     Button scissors;
     Opt playerChoice;
     Opt computerChoice;
+
+
 
 
     public top() {
@@ -51,6 +58,7 @@ public class top extends Fragment {
             public void onClick(View view){
                 playerChoice = Opt.ROCK;
                 generateChoice();
+                setPhonePick();
                 generateResult(playerChoice, computerChoice);
             }
         });
@@ -59,6 +67,7 @@ public class top extends Fragment {
             public void onClick(View view){
                 playerChoice = Opt.PAPER;
                 generateChoice();
+                setPhonePick();
                 generateResult(playerChoice, computerChoice);
             }
         });
@@ -67,10 +76,21 @@ public class top extends Fragment {
             public void onClick(View view){
                 playerChoice = Opt.SCISSORS;
                 generateChoice();
+                setPhonePick();
                 generateResult(playerChoice, computerChoice);
             }
         });
 
+    }
+
+    private void setPhonePick(){
+        TextView pick = (TextView)getView().findViewById(R.id.phonePick);
+        pick.setText(computerChoice.name());
+    }
+
+    private void setResult(Result results){
+        TextView result = (TextView)getView().findViewById(R.id.result);
+        result.setText(results.name());
     }
 
     private void generateChoice(){
@@ -89,41 +109,63 @@ public class top extends Fragment {
     }
 
     private void generateResult(Opt computer, Opt player){
+        MainActivity ma = (MainActivity) getActivity();
         if(computer == Opt.PAPER){
             if(player == Opt.PAPER){
                 //TIE
+                ma.tieGame();
+                setResult(Result.TIE);
             }
             else if(player == Opt.ROCK){
                 //Computer Win
                 //Player Lose
+                ma.computerWin();
+                setResult(Result.LOSE);
             }
             else{
                 //Computer Lose
                 //Player Win
+                ma.userWin();
+                setResult(Result.WIN);
             }
         }
         else if(computer == Opt.ROCK){
             if(player == Opt.PAPER){
                 //Computer Lose
                 //Player Win
+                ma.userWin();
+                setResult(Result.WIN);
             }
             else if(player == Opt.ROCK){
                 //Tie
+                ma.tieGame();
+                setResult(Result.TIE);
             }
             else{
                 //Computer Win
                 //Player Lose
+                ma.computerWin();
+                setResult(Result.LOSE);
             }
         }
         else{
             if(player == Opt.PAPER){
-
+                //Computer Win
+                //Player Lose
+                ma.computerWin();
+                setResult(Result.LOSE);
             }
             else if(player == Opt.ROCK){
+                //Player Win
+                //Computer Lose
+                ma.userWin();
+                setResult(Result.WIN);
 
             }
             else{
-
+                //Tie Game
+                ma.tieGame();
+                setResult(Result.TIE);
             }
         }
 

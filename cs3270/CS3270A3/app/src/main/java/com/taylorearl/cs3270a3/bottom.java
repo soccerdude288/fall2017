@@ -2,12 +2,14 @@ package com.taylorearl.cs3270a3;
 
 
 import android.os.Bundle;
+import android.support.annotation.BoolRes;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 /**
@@ -28,12 +30,26 @@ public class bottom extends Fragment {
         // Required empty public constructor
     }
 
+    private void reset(Boolean test){
+        computerWins=0;
+        userWins=0;
+        tieCount=0;
+        totalPlayedGames=0;
+        update();
+
+    }
+
     private void reset(){
         computerWins=0;
         userWins=0;
         tieCount=0;
         totalPlayedGames=0;
+        update();
+        Toast toast = Toast.makeText(getActivity(), "Game Reset", Toast.LENGTH_LONG);
+        toast.show();
+    }
 
+    private void update(){
         TextView cWin = (TextView)getView().findViewById(R.id.phoneWinCount);
         TextView uWin = (TextView)getView().findViewById(R.id.myWinCount);
         TextView ties = (TextView)getView().findViewById(R.id.tieGame);
@@ -56,12 +72,33 @@ public class bottom extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        reset();
+        Boolean t = true;
+        reset(t);
         reset = (Button)getView().findViewById(R.id.btnReset);
         reset.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
                 reset();
             }
         });
+    }
+
+    public void gamePlayed(){
+        totalPlayedGames ++;
+        update();
+    }
+
+    public void computerWin(){
+        computerWins ++;
+        update();
+    }
+
+    public void playerWin(){
+        userWins ++;
+        update();
+    }
+
+    public void gameTie(){
+        tieCount ++;
+        update();
     }
 }
