@@ -25,3 +25,12 @@ C:\Users\Shawn\Desktop\My Class for Teaching C# at Weber State\_Fall Class 2016\
 C:\Users\Shawn\Desktop\C# WSU\_Fall Class 2016\My Program Examples\Code Examples Complete\3. Chapter 5 and 6 Example\Chapter 5 and 6 Example\bin\Debug\Chapter 5 and 6 Example.exe.config
 C:\Users\Shawn\Desktop\C# WSU\_Fall Class 2016\My Program Examples\Code Examples Complete\3. Chapter 5 and 6 Example\Chapter 5 and 6 Example\obj\Debug\Chapter 5 and 6 Example.exe
 C:\Users\Shawn\Desktop\C# WSU\_Fall Class 2016\My Program Examples\Code Examples Complete\3. Chapter 5 and 6 Example\Chapter 5 and 6 Example\obj\Debug\Chapter 5 and 6 Example.pdb
+M:\fall2017\cs3280\examp\exampleProgram\3. Chapter 5 and 6 Example\Chapter 5 and 6 Example\bin\Debug\Chapter 5 and 6 Example.exe.config
+M:\fall2017\cs3280\examp\exampleProgram\3. Chapter 5 and 6 Example\Chapter 5 and 6 Example\obj\Debug\Chapter 5 and 6 Example.exe
+M:\fall2017\cs3280\examp\exampleProgram\3. Chapter 5 and 6 Example\Chapter 5 and 6 Example\obj\Debug\Chapter 5 and 6 Example.pdb
+M:\fall2017\cs3280\examp\exampleProgram\3. Chapter 5 and 6 Example\Chapter 5 and 6 Example\bin\Debug\Chapter 5 and 6 Example.exe
+M:\fall2017\cs3280\examp\exampleProgram\3. Chapter 5 and 6 Example\Chapter 5 and 6 Example\bin\Debug\Chapter 5 and 6 Example.pdb
+M:\fall2017\cs3280\examp\exampleProgram\3. Chapter 5 and 6 Example\Chapter 5 and 6 Example\obj\Debug\Chapter 5 and 6 Example.csprojResolveAssemblyReference.cache
+M:\fall2017\cs3280\examp\exampleProgram\3. Chapter 5 and 6 Example\Chapter 5 and 6 Example\obj\Debug\Chapter_5_and_6_Example.Form1.resources
+M:\fall2017\cs3280\examp\exampleProgram\3. Chapter 5 and 6 Example\Chapter 5 and 6 Example\obj\Debug\Chapter_5_and_6_Example.Properties.Resources.resources
+M:\fall2017\cs3280\examp\exampleProgram\3. Chapter 5 and 6 Example\Chapter 5 and 6 Example\obj\Debug\Chapter 5 and 6 Example.csproj.GenerateResource.Cache
