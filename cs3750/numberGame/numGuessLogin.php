@@ -8,34 +8,40 @@ session_start();
 		<title></title>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 		<script type="text/javascript" src="sha.js" ></script>
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+		<!-- Optional theme -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+		<!-- Latest compiled and minified JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 	</head>
 	<body>
-		<?php
-		if (isset($_GET['invalidUser'])) {
-			echo "<div id='error'>Invalid Username</div>";
-		}
-		if (isset($_GET['duplicateUser'])) {
-			echo "<div id='error'>Username Already Exists</div>";
-		}
-		?>
-		<form action="numGuess.php" method="post">
-			<fieldset>
-				<table>
-					<tr>
-						<td>Username: </td>
-						<td><input type="text" id="username" name="username"></input></td>
-					</tr>
-					<tr>
-						<td>Password: </td>
-						<td><input type="password" id="password" name="password"></input></td>
-					</tr>
-					<tr>
-						<td><button onclick="hash()" name="login">Submit</button></td>
-						<td><button onclick="hash()" name="newUser">Create New User</button></td>
-					</tr>
-				</table>
-			</fieldset>
-		</form>		
+		<div class="container">
+		<h1>Number Guessing Game Login</h1>
+			<?php
+			if (isset($_GET['invalidUser'])) {
+				echo "<div class='alert alert-danger'>Invalid Username/Password</div>";
+			}
+			if (isset($_GET['duplicateUser'])) {
+				echo "<div class='alert alert-danger'>Username Already Exists</div>";
+			}
+			?>
+			<form action="numGuess.php" method="post">
+				<div class="form-group">
+					<label for="username">Username</label>
+					<input type="text" class="form-control" id="username" name="username"></input>
+				</div>
+				<div class="form-group">
+					<label for="password">Password</label>
+					<input type="password" id="password" name="password" class="form-control"></input>
+				</div>
+				<button onclick="hash()" name="login" class="btn btn-defualt">Submit</button>
+				<button onclick="hash()" name="newUser" class="btn btn-defualt">Create New User</button>
+			
+			</form>	
+		</div>		
 	</body>
 	
 	

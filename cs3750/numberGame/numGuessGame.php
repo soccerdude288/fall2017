@@ -20,6 +20,14 @@ function newConnection(){
 		<meta charset="UTF-8">
 		<title></title>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+		<!-- Optional theme -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+		<!-- Latest compiled and minified JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 		<script type="text/javascript">
 			var randomNum = Math.floor(Math.random() * 101);
 			$(function(){
@@ -32,48 +40,69 @@ function newConnection(){
 				var value = $("#txtGuess").val();
 				if(value > randomNum){
 					$("#output2").text("Your guess is too high.");
+					$("#output2").addClass("alert alert-danger");
 					tries++;
 				}
 				else if(value < randomNum){
 					$("#output2").text("Your guess is too low.");
+					$("#output2").addClass("alert alert-danger");
 					tries++;
 				}
 				else{
 					$("#output2").text("Your guess is correct.");
+					$("#output2").removeClass("alert alert-danger");
+					$("#output2").addClass("alert alert-success");
 					tries++;
+					<?php 
+					if (isset($_SESSION['username'])) {?>
 					$.post( "numGuess.php", { count: tries, username:"<?php echo $_SESSION["username"] ?>"} );
+					<?php }?>
 				}
 			}
 
 			function init(){
 				location.reload();
 			}
+			
+			function logout(){
+				<?php
+					session_destroy();
+				?>
+				window.location = "numGuessLogin.php";
+			}
 		</script>
 	</head>
 	<body>
+	<div class="container">
 		<h1>Number Guesser</h1>
-		
-		<form>
-			<fieldset>
-				<div id="output">
-					Guess a number between 0 and 100.
-					I'll tell you if you're too high, too low, or correct.
-				</div>
-				<div style="color:red" id="output2"></div>
-				<div id="number"></div>
-				<label for>Your Guess</label>
-				<input type="text" id="txtGuess"></input>
-				<button type="button" onclick="checkGuess()">Check Guess </button>
-				<button type="button" id="again" onclick="init()">Try Again</button>
-			</fieldset>
-		</form>
-		<h1>High Score Table</h1>
-		<table>
-			<tr>
-				<th>Username</th>
-				<th>Score</th>
-			</tr>
-			<?php
+		<?php 
+		if (!isset($_SESSION['username'])) {
+			echo "<div class='alert alert-danger'>You must login to view this page</div>";
+			echo "<button onclick='logout()' class='btn btn-default'>Go to Login</button>";
+		}
+		else{
+			?>
+			<form>
+				<fieldset>
+					<div id="output">
+						Guess a number between 0 and 100.
+						I'll tell you if you're too high, too low, or correct.
+					</div>
+					<div id="output2"></div>
+					<div id="numberr"></div>
+					<label for>Your Guess</label>
+					<input type="text" id="txtGuess"></input>
+					<button type="button" onclick="checkGuess()" class="btn btn-default">Check Guess </button>
+					<button type="button" id="again" onclick="init()" class="btn btn-default">Try Again</button>
+				</fieldset>
+				</form>
+				<h1>High Score Table</h1>
+				<table class="table table-striped">
+					<tr>
+						<th>Username</th>
+						<th>Score</th>
+				</tr>
+				<?php
 				$conn = newConnection();
 				
 				$sql = "SELECT USER.username username, S.Score scores FROM `Score` S INNER JOIN `Users` USER ON S.USERID = USER.ID ORDER BY S.score LIMIT 10";
@@ -89,7 +118,9 @@ function newConnection(){
 				}
 				
 				$conn->close();
+			echo "</table>";
+		}
 		?>
-		</table>
+		</div>
 	</body>
 </html>
