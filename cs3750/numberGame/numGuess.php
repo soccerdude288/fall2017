@@ -3,7 +3,7 @@
 
 	session_start();
 
-	if(isset($_POST['submit'])){
+	if(isset($_POST['login'])){
 		logUserIn();
 	}
 	if(isset($_POST['newUser'])){
@@ -32,36 +32,46 @@
 	function insertUser(){
 		$username = $_POST["username"];
 		$password = $_POST["password"];
-		$newPassword = hash('sha256', $username.":".$password);
 		$conn = newConnection();
-		$sql = "INSERT INTO Users (username, password)
-		VALUES (\"$username\", \"$newPassword\")";
-		if ($conn->query($sql) === TRUE) {
-				header('Location: numGuessLogin.php');
-				exit();
+		
+		$sqll = "SELECT username FROM Users WHERE username=\"$username\"";
+		$resultt = mysqli_query($conn, $sqll);
+		if (mysqli_num_rows($resultt) > 0) {
+			header('Location: numGuessLogin.php?duplicateUser="true"');
+			exit();
 		} else {
-				echo "Error: " . $sql . "<br>" . $conn->error;
+			$sql = "INSERT INTO Users (username, password)
+			VALUES (\"$username\", \"$password\")";
+			if ($conn->query($sql) === TRUE) {
+					header('Location: numGuessLogin.php');
+					exit();
+			} else {
+					echo "Error: " . $sql . "<br>" . $conn->error;
+			}
+				
 		}
 		$conn->close();
 	}
 	
 	function logUserIn(){
 		$conn = newConnection();
+		echo "we are here";
 		$username = $_POST["username"];
 		$password = $_POST["password"];
-		$newPassword = hash('sha256', $username.":".$password);
-		
-		$sql = "SELECT username, password FROM Users Where username='$username' AND password='$newPassword'";
+		echo $password;
+		$sql = "SELECT username, password FROM Users Where username=\"$username\" AND password=\"$password\"";
 		$result = mysqli_query($conn, $sql);
 		if (mysqli_num_rows($result) > 0) {
 			// output data of each row
+			echo "good";
 			$_SESSION["username"] = "$username";
 			header('Location: numGuessGame.php');
+			exit();
 		} else {
-			header('Location: numGuessLogin.php');
+			echo "bad stuff";
+			header('Location: numGuessLogin.php?invalidUser="true');
+			exit();
 		}
-
-		
 		
 		$conn->close();
 	}
@@ -95,6 +105,18 @@
 	
 	function getScores(){
 		$conn = newConnection();
+		
+		$sql = "SELECT USER.username username, S.Score scores FROM `Score` S INNER JOIN `Users` USER ON S.USERID = USER.ID ORDER BY S.score DESC";
+		$result = mysqli_query($conn, $sql);
+
+		if (mysqli_num_rows($result) > 0) {
+			// output data of each row
+			while($row = mysqli_fetch_assoc($result)) {
+				echo "Username: " . $row["username"]. " - Score: " . $row["scores"] . "<br>";
+			}
+		} else {
+			echo "0 results";
+		}
 		
 		$conn->close();
 	}
