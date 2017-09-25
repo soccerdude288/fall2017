@@ -1,6 +1,8 @@
 package com.taylorearl.cs3270a4;
 
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
@@ -40,7 +42,6 @@ public class ItemsFragment extends Fragment {
         edit3.addTextChangedListener(amountChanged);
         edit4.addTextChangedListener(amountChanged);
 
-
         return rootView;
     }
 
@@ -71,4 +72,21 @@ public class ItemsFragment extends Fragment {
         }
     };
 
+    public void setDisplay(double one, double two, double three, double four){
+        edit1.setText(Double.toString(one));
+        edit2.setText(Double.toString(two));
+        edit3.setText(Double.toString(three));
+        edit4.setText(Double.toString(four));
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MainActivity ma = (MainActivity) getActivity();
+        Double one = Double.parseDouble("0" + edit1.getText().toString());
+        Double two = Double.parseDouble("0" + edit2.getText().toString());
+        Double three = Double.parseDouble("0" + edit3.getText().toString());
+        Double four = Double.parseDouble("0" + edit4.getText().toString());
+        ma.saveItems(one, two, three, four);
+    }
 }

@@ -1,10 +1,9 @@
 package com.taylorearl.cs3270a4;
 
-import android.annotation.TargetApi;
 import java.math.BigDecimal;
 
+import android.content.ClipData;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -12,11 +11,11 @@ import static java.lang.Double.parseDouble;
 
 public class MainActivity extends AppCompatActivity {
 
-    double seekValue = 0;
-    double itemTotals = 0;
-    double totalAmount = 0;
-    double rate = 0;
-    double taxAmount = 0;
+    double seekValue;
+    double itemTotals;
+    double totalAmount;
+    double rate;
+    double taxAmount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +91,16 @@ public class MainActivity extends AppCompatActivity {
         spEditor.commit();
     }
 
+    public void saveItems(double one, double two, double three, double four){
+        SharedPreferences sp = getPreferences((MODE_PRIVATE));
+        SharedPreferences.Editor spEditor = sp.edit();
+        spEditor.putString("vOne", Double.toString(one));
+        spEditor.putString("vTwo", Double.toString(two));
+        spEditor.putString("vThree", Double.toString(three));
+        spEditor.putString("vFour", Double.toString(four));
+        spEditor.commit();
+    }
+
     public void restoreState(){
         SharedPreferences sp = getPreferences((MODE_PRIVATE));
         seekValue = parseDouble(sp.getString("seekValue","0.0"));
@@ -99,6 +108,18 @@ public class MainActivity extends AppCompatActivity {
         totalAmount = parseDouble(sp.getString("totalAmount","0.0"));
         rate = parseDouble(sp.getString("rate","0.0"));
         taxAmount = parseDouble(sp.getString("taxAmount","0.0"));
+        TaxFragment frag = (TaxFragment) getSupportFragmentManager().findFragmentByTag("MD");
+        if(frag != null){
+            frag.setSeek((int)seekValue);
+        }
+        double one = parseDouble(sp.getString("vOne", "0"));
+        double two = parseDouble(sp.getString("vTwo", "0"));
+        double three = parseDouble(sp.getString("vThree", "0"));
+        double four = parseDouble(sp.getString("vFour", "0"));
+        ItemsFragment frag1 = (ItemsFragment) getSupportFragmentManager().findFragmentByTag("BO");
+        if(frag != null){
+            frag1.setDisplay(one, two, three, four);
+        }
     }
 
     public void setSeekValue(int value){

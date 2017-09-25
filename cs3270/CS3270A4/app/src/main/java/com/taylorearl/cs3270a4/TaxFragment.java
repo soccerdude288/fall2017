@@ -79,5 +79,9 @@ public class TaxFragment extends Fragment {
 
     }
 
+    public void setSeek(int value){
+        seekBar.setProgress(value);
+    }
+
 
 }
