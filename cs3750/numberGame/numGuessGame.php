@@ -1,5 +1,18 @@
 <?php
 session_start();
+
+function newConnection(){
+		$servername = "localhost";
+		$username = "W01186504";
+		$password = "Taylorcs!";
+		$dbname = "W01186504";
+
+		$conn = mysqli_connect($servername, $username, $password, $dbname);
+		if (!$conn) {
+			die("Connection failed: " . mysqli_connect_error());
+		}
+		return $conn;
+	}
 ?>
 <!DOCTYPE html>
 <html>
@@ -54,5 +67,29 @@ session_start();
 				<button type="button" id="again" onclick="init()">Try Again</button>
 			</fieldset>
 		</form>
+		<h1>High Score Table</h1>
+		<table>
+			<tr>
+				<th>Username</th>
+				<th>Score</th>
+			</tr>
+			<?php
+				$conn = newConnection();
+				
+				$sql = "SELECT USER.username username, S.Score scores FROM `Score` S INNER JOIN `Users` USER ON S.USERID = USER.ID ORDER BY S.score LIMIT 10";
+				$result = mysqli_query($conn, $sql);
+
+				if (mysqli_num_rows($result) > 0) {
+					// output data of each row
+					while($row = mysqli_fetch_assoc($result)) {
+						echo "<tr><td>" . $row["username"]. "</td><td>" . $row["scores"] . "</td></tr>";
+					}
+				} else {
+					echo "0 results";
+				}
+				
+				$conn->close();
+		?>
+		</table>
 	</body>
 </html>
