@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">CS3270A5</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="caption">Practice Making Change</string>
+    <string name="changeToMake">Change To Make</string>
+    <string name="changeTotalSoFar">Change Total So Far</string>
+    <string name="timeRemaining">Time Remaining</string>
+</resources>
