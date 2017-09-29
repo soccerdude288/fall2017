@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.math.BigDecimal;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -26,6 +28,7 @@ public class ChangeButtons extends Fragment {
     Button c10;
     Button c5;
     Button c1;
+
 
     public ChangeButtons() {
         // Required empty public constructor
@@ -65,14 +68,21 @@ public class ChangeButtons extends Fragment {
     View.OnClickListener buttonPress = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            MainActivity ma = (MainActivity) getActivity();
+            if(!ma.getInGame()){
+                ma.startGame();
+            }
+
             //txvMessage = (TextView) view.findViewById(R.id.txvMessage);
             //txvMessage.setText(btnDoSomething.getText().toString());
             Button clickedButton = (Button) v;
             String buttonCaption = clickedButton.getText().toString();
+            buttonCaption = buttonCaption.replace("$","");
+            BigDecimal value = new BigDecimal(buttonCaption);
+            ma.addToTotal(value);
             //convert txt value to bigdecimal
             //send the value up to the main activity
-
-            //txvMessage.setText(buttonCaption);
+            //ma.addToTotal();
         }
     };
 

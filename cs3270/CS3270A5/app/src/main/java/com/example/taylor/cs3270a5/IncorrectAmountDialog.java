@@ -38,7 +38,7 @@ public class IncorrectAmountDialog extends DialogFragment {
                             }
                         })
                         .create();
-        return super.onCreateDialog(savedInstanceState);
+        return dialog;
     }
 
 }

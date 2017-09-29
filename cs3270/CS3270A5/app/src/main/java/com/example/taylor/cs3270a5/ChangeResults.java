@@ -34,6 +34,7 @@ public class ChangeResults extends Fragment {
         // Inflate the layout for this fragment
         root = inflater.inflate(R.layout.fragment_change_results, container, false);
         generateAmount();
+        resetTime();
         //setmax using get setting from main activity
         return root;
     }
@@ -84,6 +85,11 @@ public class ChangeResults extends Fragment {
         BigDecimal value = zero.add(new BigDecimal(Math.random()).multiply(MAX_AMOUNT.subtract(zero)));
         setChangeToMake(value.setScale(2,BigDecimal.ROUND_HALF_UP));
         setChangeToMakeDisplay(getChangeToMake());
+    }
+
+    public void resetTime(){
+        setTimeRemaining(30);
+        setTimeDisplay(getTimeRemaining());
     }
 
 }

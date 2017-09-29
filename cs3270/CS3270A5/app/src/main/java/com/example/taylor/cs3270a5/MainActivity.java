@@ -1,5 +1,6 @@
 package com.example.taylor.cs3270a5;
 
+import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -10,9 +11,9 @@ import android.support.v4.app.Fragment;
 import java.math.BigDecimal;
 
 public class MainActivity extends AppCompatActivity {
-    ChangeResults results;
-    ChangeButtons buttons;
-    ChangeActions actions;
+
+    boolean inGame;
+    CountDownTimer ct;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,9 +29,14 @@ public class MainActivity extends AppCompatActivity {
                 .replace(R.id.bottom, new ChangeActions(), "BO")
                 .commit();
 
-        results = (ChangeResults) getSupportFragmentManager().findFragmentByTag("TO");
-        buttons = (ChangeButtons) getSupportFragmentManager().findFragmentByTag("MD");
-        actions = (ChangeActions) getSupportFragmentManager().findFragmentByTag("BO");
+
+    }
+
+    public void setInGame(boolean bool){
+        inGame = bool;
+    }
+    public boolean getInGame(){
+        return inGame;
     }
 
     @Override
@@ -42,6 +48,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        ChangeResults results = (ChangeResults) getSupportFragmentManager().findFragmentByTag("TO");
+        ChangeButtons buttons = (ChangeButtons) getSupportFragmentManager().findFragmentByTag("MD");
+        ChangeActions actions = (ChangeActions) getSupportFragmentManager().findFragmentByTag("BO");
         int id = item.getItemId();
         Toast toast;
         switch (id){
@@ -52,6 +61,9 @@ public class MainActivity extends AppCompatActivity {
                 toast.show();
                 return true;
             case R.id.btnSetChangeMax:
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.top, new ChangeResults(), "TO")
+                        .commit();
                 toast = Toast.makeText(this,"Set Maximum", Toast.LENGTH_SHORT);
                 toast.show();
                 return true;
@@ -62,13 +74,18 @@ public class MainActivity extends AppCompatActivity {
 
     //resets the change total so far variable and display to 0
     public void resetGame(){
+        ChangeResults results = (ChangeResults) getSupportFragmentManager().findFragmentByTag("TO");
         results.setChangeTotalSoFar(new BigDecimal("0.0"));
         results.setChangeTotalSoFarDisplay(results.getChangeTotalSoFar());
-        results.setTimeRemaining(30);
+        results.resetTime();
         results.setTimeDisplay(results.getTimeRemaining());
+        setInGame(false);
     }
 
     public void resetAmount(){
+        ChangeResults results = (ChangeResults) getSupportFragmentManager().findFragmentByTag("TO");
+        ChangeButtons buttons = (ChangeButtons) getSupportFragmentManager().findFragmentByTag("MD");
+        ChangeActions actions = (ChangeActions) getSupportFragmentManager().findFragmentByTag("BO");
         results.generateAmount();
     }
 
@@ -81,6 +98,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void correctAmount(){
+        ChangeResults results = (ChangeResults) getSupportFragmentManager().findFragmentByTag("TO");
+        ChangeButtons buttons = (ChangeButtons) getSupportFragmentManager().findFragmentByTag("MD");
+        ChangeActions actions = (ChangeActions) getSupportFragmentManager().findFragmentByTag("BO");
         resetGame();
         actions.setCorrectChangeCount(actions.getCorrectChangeCount() + 1);
         actions.setCorrectChangeDisplay(actions.getCorrectChangeCount());
@@ -94,5 +114,42 @@ public class MainActivity extends AppCompatActivity {
         IncorrectAmountDialog dialog = new IncorrectAmountDialog();
         dialog.setCancelable(false);
         dialog.show(getSupportFragmentManager(), "Incorrect Amount Dialog");
+    }
+
+    public void startGame(){
+        resetGame();
+        ChangeResults results = (ChangeResults) getSupportFragmentManager().findFragmentByTag("TO");
+        ChangeButtons buttons = (ChangeButtons) getSupportFragmentManager().findFragmentByTag("MD");
+        ChangeActions actions = (ChangeActions) getSupportFragmentManager().findFragmentByTag("BO");
+        ct = new CountDownTimer(30000, 1000) {
+            ChangeResults results = (ChangeResults) getSupportFragmentManager().findFragmentByTag("TO");
+            ChangeButtons buttons = (ChangeButtons) getSupportFragmentManager().findFragmentByTag("MD");
+            ChangeActions actions = (ChangeActions) getSupportFragmentManager().findFragmentByTag("BO");
+            public void onTick(long millisUntilFinished) {
+                results.setTimeRemaining((int)millisUntilFinished / 1000);
+                results.setTimeDisplay(results.getTimeRemaining());
+            }
+
+            public void onFinish() {
+                results.setTimeDisplay(0);
+                outOfTime();
+            }
+        };
+        ct.start();
+        setInGame(true);
+    }
+
+    public void addToTotal(BigDecimal value){
+        ChangeResults results = (ChangeResults) getSupportFragmentManager().findFragmentByTag("TO");
+        results.setChangeTotalSoFar(results.getChangeTotalSoFar().add(value));
+        results.setChangeTotalSoFarDisplay(results.getChangeTotalSoFar());
+        if(results.getChangeToMake().doubleValue() < results.getChangeTotalSoFar().doubleValue()){
+            ct.cancel();
+            incorrectAmmount();
+        }
+        if(results.getChangeToMake().doubleValue() == results.getChangeTotalSoFar().doubleValue()){
+            ct.cancel();
+            correctAmount();
+        }
     }
 }

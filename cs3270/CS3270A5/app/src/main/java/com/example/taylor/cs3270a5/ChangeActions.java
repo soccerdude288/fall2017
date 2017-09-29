@@ -21,6 +21,7 @@ public class ChangeActions extends Fragment {
     View root;
     int correctChangeCount;
 
+
     public ChangeActions() {
         // Required empty public constructor
     }
@@ -46,6 +47,7 @@ public class ChangeActions extends Fragment {
     public int getCorrectChangeCount(){
         return correctChangeCount;
     }
+
 
     public void setCorrectChangeDisplay(int i){
         TextView tv = (TextView) root.findViewById(R.id.correctCountValue);
