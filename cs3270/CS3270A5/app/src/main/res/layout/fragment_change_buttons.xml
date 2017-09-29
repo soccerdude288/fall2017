@@ -6,28 +6,15 @@
     tools:context="com.example.taylor.cs3270a5.ChangeButtons">
 
     <!-- TODO: Update blank fragment layout -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/timeRemaining"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/timeRemainingValue"/>
-    </LinearLayout>
-
     <TableLayout
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content">
-
-        <TableRow android:layout_width="match_parent">
-
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
             <Button
                 android:id="@+id/button50"
+                android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_column="1"
@@ -35,6 +22,7 @@
 
             <Button
                 android:id="@+id/button20"
+                android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_column="1"
@@ -42,6 +30,7 @@
 
             <Button
                 android:id="@+id/button10"
+                android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_column="1"
@@ -49,6 +38,7 @@
 
             <Button
                 android:id="@+id/button5"
+                android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_column="1"
@@ -56,10 +46,45 @@
 
             <Button
                 android:id="@+id/button1"
+                android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_column="1"
                 android:text="$1" />
+        </TableRow>
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/button50c"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=".50" />
+            <Button
+                android:id="@+id/button25c"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=".25" />
+            <Button
+                android:id="@+id/button10c"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=".10" />
+            <Button
+                android:id="@+id/button5c"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=".05" />
+            <Button
+                android:id="@+id/button1c"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=".01" />
         </TableRow>
 
     </TableLayout>
