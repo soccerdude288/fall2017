@@ -43,7 +43,7 @@
 			$sql = "INSERT INTO Users (username, password)
 			VALUES (\"$username\", \"$password\")";
 			if ($conn->query($sql) === TRUE) {
-					header('Location: numGuessLogin.php');
+					header('Location: numGuessLogin.php?success="true"');
 					exit();
 			} else {
 					echo "Error: " . $sql . "<br>" . $conn->error;

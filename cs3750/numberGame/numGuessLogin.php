@@ -1,5 +1,9 @@
 <?php
+if (isset($_GET['logout'])) {
+	session_destroy();
+}
 session_start();
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -26,6 +30,9 @@ session_start();
 			}
 			if (isset($_GET['duplicateUser'])) {
 				echo "<div class='alert alert-danger'>Username Already Exists</div>";
+			}
+			if (isset($_GET['success'])) {
+				echo "<div class='alert alert-success'>Account Created</div>";
 			}
 			?>
 			<form action="numGuess.php" method="post">

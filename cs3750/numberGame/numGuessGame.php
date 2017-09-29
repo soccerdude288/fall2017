@@ -1,6 +1,5 @@
 <?php
 session_start();
-
 function newConnection(){
 		$servername = "localhost";
 		$username = "W01186504";
@@ -53,22 +52,17 @@ function newConnection(){
 					$("#output2").removeClass("alert alert-danger");
 					$("#output2").addClass("alert alert-success");
 					tries++;
-					<?php 
-					if (isset($_SESSION['username'])) {?>
 					$.post( "numGuess.php", { count: tries, username:"<?php echo $_SESSION["username"] ?>"} );
-					<?php }?>
+					location.reload(true);
 				}
 			}
 
 			function init(){
-				location.reload();
+				location.reload(true);
 			}
 			
 			function logout(){
-				<?php
-					session_destroy();
-				?>
-				window.location = "numGuessLogin.php";
+				window.location = "numGuessLogin.php?logout='true'";
 			}
 		</script>
 	</head>
@@ -76,7 +70,7 @@ function newConnection(){
 	<div class="container">
 		<h1>Number Guesser</h1>
 		<?php 
-		if (!isset($_SESSION['username'])) {
+		if (!isset($_SESSION["username"])) {
 			echo "<div class='alert alert-danger'>You must login to view this page</div>";
 			echo "<button onclick='logout()' class='btn btn-default'>Go to Login</button>";
 		}
