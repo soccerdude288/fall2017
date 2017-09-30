@@ -2,6 +2,9 @@ package com.example.taylor.cs3270a5;
 
 
 import java.math.BigDecimal;
+
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ShareCompat;
@@ -33,7 +36,6 @@ public class ChangeResults extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         root = inflater.inflate(R.layout.fragment_change_results, container, false);
-        generateAmount();
         resetTime();
         //setmax using get setting from main activity
         return root;
@@ -68,11 +70,11 @@ public class ChangeResults extends Fragment {
     //Display Setters
     public void setChangeToMakeDisplay(BigDecimal value){
         TextView tv = (TextView) root.findViewById(R.id.changeToMakeValue);
-        tv.setText(value.toString());
+        tv.setText("$".concat(value.toString()));
     }
     public void setChangeTotalSoFarDisplay(BigDecimal value){
         TextView tv = (TextView) root.findViewById(R.id.changeTotalSoFarValue);
-        tv.setText(value.toString());
+        tv.setText("$".concat(getChangeTotalSoFar().toString()));
     }
     public void setTimeDisplay(int t){
         TextView tv = (TextView) root.findViewById(R.id.timeRemainingValue);
@@ -92,4 +94,28 @@ public class ChangeResults extends Fragment {
         setTimeDisplay(getTimeRemaining());
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        SharedPreferences sp = getActivity().getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor ed = sp.edit();
+        ed.putString("changeToMake", getChangeToMake().toString());
+        ed.putString("changeSoFar", getChangeTotalSoFar().toString());
+        ed.putInt("time", getTimeRemaining());
+        ed.apply();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        MainActivity ma = (MainActivity) getActivity();
+        SharedPreferences sp = getActivity().getPreferences(Context.MODE_PRIVATE);
+        setChangeToMake(new BigDecimal(sp.getString("changeToMake", "0.00")));
+        if(ma.getInGame()) {
+            setChangeTotalSoFar(new BigDecimal(sp.getString("changeSoFar", "0.00")));
+            setChangeTotalSoFarDisplay(getChangeTotalSoFar());
+            ma.startTimer(getTimeRemaining());
+        }
+        setChangeToMakeDisplay(getChangeToMake());
+    }
 }
