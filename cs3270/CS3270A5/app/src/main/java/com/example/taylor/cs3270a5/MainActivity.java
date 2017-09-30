@@ -1,5 +1,7 @@
 package com.example.taylor.cs3270a5;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -75,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
     //resets the change total so far variable and display to 0
     public void resetGame(){
         ChangeResults results = (ChangeResults) getSupportFragmentManager().findFragmentByTag("TO");
-        results.setChangeTotalSoFar(new BigDecimal("0.0"));
+        results.setChangeTotalSoFar(new BigDecimal("0.00"));
         results.setChangeTotalSoFarDisplay(results.getChangeTotalSoFar());
         results.resetTime();
         results.setTimeDisplay(results.getTimeRemaining());
@@ -121,7 +123,12 @@ public class MainActivity extends AppCompatActivity {
         ChangeResults results = (ChangeResults) getSupportFragmentManager().findFragmentByTag("TO");
         ChangeButtons buttons = (ChangeButtons) getSupportFragmentManager().findFragmentByTag("MD");
         ChangeActions actions = (ChangeActions) getSupportFragmentManager().findFragmentByTag("BO");
-        ct = new CountDownTimer(30000, 1000) {
+        startTimer(30);
+        setInGame(true);
+    }
+
+    public void startTimer(int sec){
+        ct = new CountDownTimer(sec * 1000, 1000) {
             ChangeResults results = (ChangeResults) getSupportFragmentManager().findFragmentByTag("TO");
             ChangeButtons buttons = (ChangeButtons) getSupportFragmentManager().findFragmentByTag("MD");
             ChangeActions actions = (ChangeActions) getSupportFragmentManager().findFragmentByTag("BO");
@@ -136,7 +143,6 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         ct.start();
-        setInGame(true);
     }
 
     public void addToTotal(BigDecimal value){
@@ -151,5 +157,22 @@ public class MainActivity extends AppCompatActivity {
             ct.cancel();
             correctAmount();
         }
+    }
+
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        SharedPreferences sp = getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor ed = sp.edit();
+        ed.putBoolean("inGame", getInGame());
+        ed.apply();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        SharedPreferences sp = getPreferences(Context.MODE_PRIVATE);
+        setInGame(sp.getBoolean("inGame", false));
     }
 }

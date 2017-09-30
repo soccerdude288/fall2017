@@ -1,6 +1,8 @@
 package com.example.taylor.cs3270a5;
 
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ShareCompat;
@@ -9,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+
+import java.math.BigDecimal;
 
 
 /**
@@ -75,5 +79,21 @@ public class ChangeActions extends Fragment {
             //new value
         }
     };
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        SharedPreferences sp = getActivity().getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor ed = sp.edit();
+        ed.putInt("gamesWon", getCorrectChangeCount());
+        ed.apply();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        SharedPreferences sp = getActivity().getPreferences(Context.MODE_PRIVATE);
+        setCorrectChangeCount(sp.getInt("gamesWon", 0));
+    }
 
 }
