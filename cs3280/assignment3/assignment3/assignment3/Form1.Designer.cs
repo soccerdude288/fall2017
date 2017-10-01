@@ -112,6 +112,7 @@
             this.b_submitCounts.TabIndex = 0;
             this.b_submitCounts.Text = "Submit Counts";
             this.b_submitCounts.UseVisualStyleBackColor = true;
+            this.b_submitCounts.Click += new System.EventHandler(this.b_submitCounts_Click);
             // 
             // b_resetScore
             // 
@@ -121,6 +122,7 @@
             this.b_resetScore.TabIndex = 1;
             this.b_resetScore.Text = "Reset Score";
             this.b_resetScore.UseVisualStyleBackColor = true;
+            this.b_resetScore.Click += new System.EventHandler(this.b_resetScore_Click);
             // 
             // navigateBox
             // 
@@ -143,6 +145,7 @@
             this.b_lastStudent.TabIndex = 3;
             this.b_lastStudent.Text = ">> Last Student";
             this.b_lastStudent.UseVisualStyleBackColor = true;
+            this.b_lastStudent.Click += new System.EventHandler(this.b_lastStudent_Click);
             // 
             // b_nextStudent
             // 
@@ -152,7 +155,7 @@
             this.b_nextStudent.TabIndex = 2;
             this.b_nextStudent.Text = "> Next Student";
             this.b_nextStudent.UseVisualStyleBackColor = true;
-            this.b_nextStudent.Click += new System.EventHandler(this.button5_Click);
+            this.b_nextStudent.Click += new System.EventHandler(this.b_nextStudent_Click_1);
             // 
             // b_prevStudent
             // 
@@ -162,6 +165,7 @@
             this.b_prevStudent.TabIndex = 1;
             this.b_prevStudent.Text = "< Prev Student";
             this.b_prevStudent.UseVisualStyleBackColor = true;
+            this.b_prevStudent.Click += new System.EventHandler(this.b_prevStudent_Click);
             // 
             // b_firstStudents
             // 
@@ -171,6 +175,7 @@
             this.b_firstStudents.TabIndex = 0;
             this.b_firstStudents.Text = "<< First Student";
             this.b_firstStudents.UseVisualStyleBackColor = true;
+            this.b_firstStudents.Click += new System.EventHandler(this.b_firstStudents_Click);
             // 
             // sInfoBox1
             // 
@@ -192,6 +197,7 @@
             this.b_saveName.TabIndex = 2;
             this.b_saveName.Text = "Save Name";
             this.b_saveName.UseVisualStyleBackColor = true;
+            this.b_saveName.Click += new System.EventHandler(this.b_saveName_Click);
             // 
             // i_studentNum
             // 
@@ -231,6 +237,7 @@
             this.b_saveScore.TabIndex = 4;
             this.b_saveScore.Text = "Save Score";
             this.b_saveScore.UseVisualStyleBackColor = true;
+            this.b_saveScore.Click += new System.EventHandler(this.b_saveScore_Click);
             // 
             // i_assignmentScore
             // 
@@ -260,9 +267,9 @@
             this.l_enterAssignmentNum.AutoSize = true;
             this.l_enterAssignmentNum.Location = new System.Drawing.Point(28, 20);
             this.l_enterAssignmentNum.Name = "l_enterAssignmentNum";
-            this.l_enterAssignmentNum.Size = new System.Drawing.Size(156, 13);
+            this.l_enterAssignmentNum.Size = new System.Drawing.Size(132, 13);
             this.l_enterAssignmentNum.TabIndex = 0;
-            this.l_enterAssignmentNum.Text = "Enter Assignment Number (1-5):";
+            this.l_enterAssignmentNum.Text = "Enter Assignment Number:";
             // 
             // b_displayScore
             // 
@@ -272,6 +279,7 @@
             this.b_displayScore.TabIndex = 5;
             this.b_displayScore.Text = "Display Score";
             this.b_displayScore.UseVisualStyleBackColor = true;
+            this.b_displayScore.Click += new System.EventHandler(this.b_displayScore_Click);
             // 
             // scoresDisplay
             // 
