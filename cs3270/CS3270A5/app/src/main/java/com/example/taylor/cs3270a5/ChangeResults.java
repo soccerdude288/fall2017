@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ShareCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,8 +64,12 @@ public class ChangeResults extends Fragment {
     public void setChangeTotalSoFar(BigDecimal bd){
         changeTotalSoFar = bd;
     }
+
     public BigDecimal getChangeTotalSoFar(){
-        return changeTotalSoFar;
+        if(changeTotalSoFar != null)
+            return changeTotalSoFar;
+        else
+            return new BigDecimal("0.00");
     }
 
     //Display Setters
@@ -83,6 +88,7 @@ public class ChangeResults extends Fragment {
 
     //Generates the random amount to count to and sets global variable
     public void generateAmount(){
+        Log.d("testing", "in generateAmount");
         BigDecimal zero = new BigDecimal("0.0");
         BigDecimal value = zero.add(new BigDecimal(Math.random()).multiply(MAX_AMOUNT.subtract(zero)));
         setChangeToMake(value.setScale(2,BigDecimal.ROUND_HALF_UP));
@@ -90,12 +96,14 @@ public class ChangeResults extends Fragment {
     }
 
     public void resetTime(){
+        Log.d("testing", "in resetTime");
         setTimeRemaining(30);
         setTimeDisplay(getTimeRemaining());
     }
 
     @Override
     public void onPause() {
+        Log.d("testing", "in onPause changeresult");
         super.onPause();
         SharedPreferences sp = getActivity().getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor ed = sp.edit();
@@ -107,10 +115,12 @@ public class ChangeResults extends Fragment {
 
     @Override
     public void onResume() {
+        Log.d("testing", "in onResume changeresult");
         super.onResume();
         MainActivity ma = (MainActivity) getActivity();
         SharedPreferences sp = getActivity().getPreferences(Context.MODE_PRIVATE);
         setChangeToMake(new BigDecimal(sp.getString("changeToMake", "0.00")));
+        setTimeRemaining(sp.getInt("time", 30));
         if(ma.getInGame()) {
             setChangeTotalSoFar(new BigDecimal(sp.getString("changeSoFar", "0.00")));
             setChangeTotalSoFarDisplay(getChangeTotalSoFar());

@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ShareCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,6 +62,7 @@ public class ChangeActions extends Fragment {
     View.OnClickListener startOverPress = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            Log.d("testing", "in startOverPress");
             MainActivity ma = (MainActivity) getActivity();
             ma.resetGame();
             //reset timer
@@ -71,6 +73,7 @@ public class ChangeActions extends Fragment {
     View.OnClickListener newAmountPress = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            Log.d("testing", "in newAmountPress");
             MainActivity ma = (MainActivity) getActivity();
             ma.resetGame();
             ma.resetAmount();
@@ -82,6 +85,7 @@ public class ChangeActions extends Fragment {
 
     @Override
     public void onPause() {
+        Log.d("testing", "in onPause changeActions");
         super.onPause();
         SharedPreferences sp = getActivity().getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor ed = sp.edit();
@@ -91,9 +95,12 @@ public class ChangeActions extends Fragment {
 
     @Override
     public void onResume() {
+        Log.d("testing", "in onPause changeActions");
         super.onResume();
         SharedPreferences sp = getActivity().getPreferences(Context.MODE_PRIVATE);
-        setCorrectChangeCount(sp.getInt("gamesWon", 0));
+        int games = sp.getInt("gamesWon", 0);
+        setCorrectChangeCount(games);
+        setCorrectChangeDisplay(getCorrectChangeCount());
     }
 
 }

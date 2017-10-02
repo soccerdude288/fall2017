@@ -3,6 +3,7 @@ package com.example.taylor.cs3270a5;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,6 +69,7 @@ public class ChangeButtons extends Fragment {
     View.OnClickListener buttonPress = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            Log.d("testing", "in buttonPress");
             MainActivity ma = (MainActivity) getActivity();
             if(!ma.getInGame()){
                 ma.startGame();

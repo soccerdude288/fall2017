@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -20,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d("testing", "in onCreate");
         setContentView(R.layout.activity_main);
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.top, new ChangeResults(), "TO")
@@ -50,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Log.d("testing", "selected option");
         ChangeResults results = (ChangeResults) getSupportFragmentManager().findFragmentByTag("TO");
         ChangeButtons buttons = (ChangeButtons) getSupportFragmentManager().findFragmentByTag("MD");
         ChangeActions actions = (ChangeActions) getSupportFragmentManager().findFragmentByTag("BO");
@@ -57,12 +60,14 @@ public class MainActivity extends AppCompatActivity {
         Toast toast;
         switch (id){
             case R.id.btnZeroCorrectCount:
+                Log.d("testing", "selected zero count");
                 actions.setCorrectChangeCount(0);
                 actions.setCorrectChangeDisplay(actions.getCorrectChangeCount());
                 toast = Toast.makeText(this,"Reset To Zero", Toast.LENGTH_SHORT);
                 toast.show();
                 return true;
             case R.id.btnSetChangeMax:
+                Log.d("testing", "selected change max");
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.top, new ChangeResults(), "TO")
                         .commit();
@@ -76,15 +81,19 @@ public class MainActivity extends AppCompatActivity {
 
     //resets the change total so far variable and display to 0
     public void resetGame(){
+        Log.d("testing", "in resetGame()");
         ChangeResults results = (ChangeResults) getSupportFragmentManager().findFragmentByTag("TO");
         results.setChangeTotalSoFar(new BigDecimal("0.00"));
         results.setChangeTotalSoFarDisplay(results.getChangeTotalSoFar());
+        if(ct != null)
+            ct.cancel();
         results.resetTime();
         results.setTimeDisplay(results.getTimeRemaining());
         setInGame(false);
     }
 
     public void resetAmount(){
+        Log.d("testing", "in resetAmount()");
         ChangeResults results = (ChangeResults) getSupportFragmentManager().findFragmentByTag("TO");
         ChangeButtons buttons = (ChangeButtons) getSupportFragmentManager().findFragmentByTag("MD");
         ChangeActions actions = (ChangeActions) getSupportFragmentManager().findFragmentByTag("BO");
@@ -93,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void outOfTime(){
+        Log.d("testing", "in outOfTime()");
         resetGame();
         TimesUpDialog dialog = new TimesUpDialog();
         dialog.setCancelable(false);
@@ -100,6 +110,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void correctAmount(){
+        Log.d("testing", "in correctAmount");
         ChangeResults results = (ChangeResults) getSupportFragmentManager().findFragmentByTag("TO");
         ChangeButtons buttons = (ChangeButtons) getSupportFragmentManager().findFragmentByTag("MD");
         ChangeActions actions = (ChangeActions) getSupportFragmentManager().findFragmentByTag("BO");
@@ -112,6 +123,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void incorrectAmmount(){
+        Log.d("testing", "in incorrectAmount");
         resetGame();
         IncorrectAmountDialog dialog = new IncorrectAmountDialog();
         dialog.setCancelable(false);
@@ -119,15 +131,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void startGame(){
-        resetGame();
+        Log.d("testing", "in startGame()");
         ChangeResults results = (ChangeResults) getSupportFragmentManager().findFragmentByTag("TO");
         ChangeButtons buttons = (ChangeButtons) getSupportFragmentManager().findFragmentByTag("MD");
         ChangeActions actions = (ChangeActions) getSupportFragmentManager().findFragmentByTag("BO");
+        results.setChangeTotalSoFar(new BigDecimal("0.00"));
+        results.setChangeTotalSoFarDisplay(results.getChangeTotalSoFar());
         startTimer(30);
         setInGame(true);
     }
 
     public void startTimer(int sec){
+        Log.d("testing", "in startTimer()");
         ct = new CountDownTimer(sec * 1000, 1000) {
             ChangeResults results = (ChangeResults) getSupportFragmentManager().findFragmentByTag("TO");
             ChangeButtons buttons = (ChangeButtons) getSupportFragmentManager().findFragmentByTag("MD");
@@ -146,6 +161,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void addToTotal(BigDecimal value){
+        Log.d("testing", "in addToTotal()");
         ChangeResults results = (ChangeResults) getSupportFragmentManager().findFragmentByTag("TO");
         results.setChangeTotalSoFar(results.getChangeTotalSoFar().add(value));
         results.setChangeTotalSoFarDisplay(results.getChangeTotalSoFar());
@@ -162,15 +178,19 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onPause() {
+        Log.d("testing", "in onPause");
         super.onPause();
         SharedPreferences sp = getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor ed = sp.edit();
         ed.putBoolean("inGame", getInGame());
         ed.apply();
+        if(ct != null)
+            ct.cancel();
     }
 
     @Override
     public void onResume() {
+        Log.d("testing", "in onResume");
         super.onResume();
         SharedPreferences sp = getPreferences(Context.MODE_PRIVATE);
         setInGame(sp.getBoolean("inGame", false));
