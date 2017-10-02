@@ -38,6 +38,9 @@ public class ChangeResults extends Fragment {
         // Inflate the layout for this fragment
         root = inflater.inflate(R.layout.fragment_change_results, container, false);
         resetTime();
+        if(changeToMake == null){
+            generateAmount();
+        }
         //setmax using get setting from main activity
         return root;
     }
@@ -119,7 +122,9 @@ public class ChangeResults extends Fragment {
         super.onResume();
         MainActivity ma = (MainActivity) getActivity();
         SharedPreferences sp = getActivity().getPreferences(Context.MODE_PRIVATE);
-        setChangeToMake(new BigDecimal(sp.getString("changeToMake", "0.00")));
+        BigDecimal value = new BigDecimal(sp.getString("changeToMake", "0.00"));
+        if(value.toString() != "0.00")
+            setChangeToMake(value);
         setTimeRemaining(sp.getInt("time", 30));
         if(ma.getInGame()) {
             setChangeTotalSoFar(new BigDecimal(sp.getString("changeSoFar", "0.00")));

@@ -3,6 +3,7 @@ package com.example.taylor.cs3270a5;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.CountDownTimer;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -32,8 +33,6 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.bottom, new ChangeActions(), "BO")
                 .commit();
-
-
     }
 
     public void setInGame(boolean bool){
@@ -68,11 +67,15 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             case R.id.btnSetChangeMax:
                 Log.d("testing", "selected change max");
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.top, new ChangeResults(), "TO")
+                FragmentManager fg = getSupportFragmentManager();
+                Fragment setMaxFrag = new SetMaxAmount();
+                Fragment resultsFrag = fg.findFragmentByTag("TO");
+                Fragment buttonsFrag = fg.findFragmentByTag("MD");
+                Fragment actionsFrag = fg.findFragmentByTag("BO");
+                fg.beginTransaction().hide(resultsFrag).hide(buttonsFrag)
+                        .hide(actionsFrag).replace(R.id.top, setMaxFrag, "MAX")
+                        .addToBackStack(null)
                         .commit();
-                toast = Toast.makeText(this,"Set Maximum", Toast.LENGTH_SHORT);
-                toast.show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -194,5 +197,16 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         SharedPreferences sp = getPreferences(Context.MODE_PRIVATE);
         setInGame(sp.getBoolean("inGame", false));
+    }
+
+    public void setMaxAmount(int value){
+        ChangeResults results = (ChangeResults) getSupportFragmentManager().findFragmentByTag("TO");
+        results.setMax(new BigDecimal(value));
+    }
+
+    public String getMaxAmount(){
+        ChangeResults results = (ChangeResults) getSupportFragmentManager().findFragmentByTag("TO");
+        BigDecimal maxD = results.getMax();
+        return maxD.toString();
     }
 }

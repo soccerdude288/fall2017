@@ -9,6 +9,7 @@
     <string name="correctCount">Correct Change Count</string>
     <string name="zeroCorrect">Zero Correct Count</string>
     <string name="setChangeMax">Set Change Max</string>
+    <string name="maxChangeAmount">Maximum Change Amount</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
