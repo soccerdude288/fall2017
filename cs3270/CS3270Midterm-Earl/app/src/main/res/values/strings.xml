@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">CS3270 Midterm - Earl</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="l_weight">Weight in Pounds</string>
+    <string name="l_height">Height in Inches</string>
+    <string name="l_age">Age</string>
+    <string name="l_female">Female</string>
+    <string name="l_male">Male</string>
+    <string name="l_calculate">Calculate</string>
+    <string name="l_bmi">Body Mass Index</string>
+    <string name="l_bfp">Body Fat Percentage</string>
+</resources>
