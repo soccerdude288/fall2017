@@ -6,6 +6,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 
 
 /**
@@ -13,6 +15,9 @@ import android.view.ViewGroup;
  */
 public class CourseEditFragment extends Fragment {
 
+    private View root;
+    private EditText editID, editName, editCourse, editStart, editEnd;
+    private Button saveBtn;
 
     public CourseEditFragment() {
         // Required empty public constructor
@@ -23,7 +28,34 @@ public class CourseEditFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_course_edit, container, false);
+        root = inflater.inflate(R.layout.fragment_course_edit, container, false);
+        editID = (EditText) root.findViewById(R.id.i_id);
+        editName = (EditText) root.findViewById(R.id.i_name);
+        editCourse = (EditText) root.findViewById(R.id.i_course);
+        editStart = (EditText) root.findViewById(R.id.i_start);
+        editEnd = (EditText) root.findViewById(R.id.i_end);
+        saveBtn = (Button) root.findViewById(R.id.fab_Save);
+        saveBtn.setOnClickListener(insert);
+
+
+        return root;
     }
+
+    View.OnClickListener insert = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            DatabaseHelper dbHelp = new DatabaseHelper(getActivity(), "Courses", null, 1);
+            long rowID = dbHelp.insertClass(
+                    editID.getText().toString(),
+                    editName.getText().toString(),
+                    editCourse.getText().toString(),
+                    editStart.getText().toString(),
+                    editEnd.getText().toString()
+            );
+            MainActivity ma = (MainActivity) getActivity();
+            ma.backToList();
+        }
+
+    };
 
 }
