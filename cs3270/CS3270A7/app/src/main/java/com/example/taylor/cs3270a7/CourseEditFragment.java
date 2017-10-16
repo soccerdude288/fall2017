@@ -3,6 +3,7 @@ package com.example.taylor.cs3270a7;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,7 @@ public class CourseEditFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Log.d("testing", "in onCreate courseeditfrag");
         // Inflate the layout for this fragment
         root = inflater.inflate(R.layout.fragment_course_edit, container, false);
         editID = (EditText) root.findViewById(R.id.i_id);

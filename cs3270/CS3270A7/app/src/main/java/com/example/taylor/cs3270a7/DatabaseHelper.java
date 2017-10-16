@@ -75,10 +75,10 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
     @Override
     public void onCreate(SQLiteDatabase db){
+        Log.d("testing", "in onCreate dbhelper");
         String createQuery = "CREATE TABLE classes" +
                 "(_id integer primary key autoincrement," +
                 "name TEXT, course TEXT, start TEXT, end TEXT);";
-
         db.execSQL(createQuery);
     }
 
