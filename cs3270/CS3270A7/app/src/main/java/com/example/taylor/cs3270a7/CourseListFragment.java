@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
 
 /**
@@ -50,12 +51,20 @@ public class CourseListFragment extends ListFragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                MainActivity ma = (MainActivity) getActivity();
+                ma.goToEdit();
+                //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
             }
         });
 
         return view;
     }
 
+    @Override
+    public void onListItemClick(ListView l, View v, int position, long id) {
+        super.onListItemClick(l, v, position, id);
+        Log.d("testing", "in courselistfrag onlistitemclick");
+        MainActivity ma = (MainActivity) getActivity();
+        ma.populateClass(id);
+    }
 }

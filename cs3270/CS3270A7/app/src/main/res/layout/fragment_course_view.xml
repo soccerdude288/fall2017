@@ -21,17 +21,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingRight="15dp"
-                android:textSize="30dp"
+                android:textSize="20dp"
                 android:gravity="right"
                 android:text="@string/s_id" />
 
             <TextView
                 android:id="@+id/v_viewId"
-                android:textSize="30dp"
-                android:background="@drawable/border"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:background="@drawable/border"
+                android:text="TextView"
+                android:layout_weight="1"
+                android:textSize="30dp" />
         </TableRow>
 
         <TableRow
@@ -40,7 +41,7 @@
             android:padding="10dp">
             <TextView
                 android:id="@+id/l_viewName"
-                android:textSize="30dp"
+                android:textSize="20dp"
                 android:paddingRight="15dp"
                 android:gravity="right"
                 android:layout_width="wrap_content"
@@ -53,6 +54,7 @@
                 android:background="@drawable/border"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="TextView" />
         </TableRow>
 
@@ -62,7 +64,7 @@
             android:padding="10dp">
             <TextView
                 android:id="@+id/l_viewCourse"
-                android:textSize="30dp"
+                android:textSize="20dp"
                 android:paddingRight="15dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -71,10 +73,10 @@
             <TextView
                 android:id="@+id/v_viewCourse"
                 android:textSize="30dp"
-                android:gravity="right"
                 android:background="@drawable/border"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="TextView" />
         </TableRow>
 
@@ -84,7 +86,7 @@
             android:padding="10dp">
             <TextView
                 android:id="@+id/l_viewStart"
-                android:textSize="30dp"
+                android:textSize="20dp"
                 android:paddingRight="15dp"
                 android:gravity="right"
                 android:layout_width="wrap_content"
@@ -97,6 +99,7 @@
                 android:background="@drawable/border"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="TextView" />
         </TableRow>
         <TableRow
@@ -105,7 +108,7 @@
             android:padding="10dp">
             <TextView
                 android:id="@+id/l_viewEnd"
-                android:textSize="30dp"
+                android:textSize="20dp"
                 android:paddingRight="15dp"
                 android:gravity="right"
                 android:layout_width="wrap_content"
@@ -118,6 +121,7 @@
                 android:background="@drawable/border"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="TextView" />
         </TableRow>
 

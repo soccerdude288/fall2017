@@ -73,13 +73,33 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         return cursor;
     }
 
+    public Cursor getOneClass(long id){
+        Cursor cursor = null;
+        if(open() != null){
+            Log.d("testing", "In getoneclass");
+            cursor = database.rawQuery("SELECT * FROM classes WHERE _id=" +id, null);
+        }
+        return cursor;
+    }
+
+    public void deleteOneClass(long id) {
+        long rowID = -1;
+        if (open() != null) {
+            Log.d("testing", "In getoneclass");
+            //cursor = database.rawQuery("DELETE FROM classes WHERE _id=" +id, null);
+            rowID = database.delete("classes", "_id=" + id, null);
+            close();
+        }
+    }
+
     @Override
     public void onCreate(SQLiteDatabase db){
         Log.d("testing", "in onCreate dbhelper");
         String createQuery = "CREATE TABLE classes" +
                 "(_id integer primary key autoincrement," +
-                "name TEXT, course TEXT, start TEXT, end TEXT);";
+                "name TEXT, course TEXT, id TEXT, start TEXT, end TEXT);";
         db.execSQL(createQuery);
+        //insertClass("testID", "testName", "testCourse", "testStart", "testEnd");
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.example.taylor.cs3270a7;
 
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,7 +19,7 @@ public class CourseEditFragment extends Fragment {
 
     private View root;
     private EditText editID, editName, editCourse, editStart, editEnd;
-    private Button saveBtn;
+    private FloatingActionButton saveBtn;
 
     public CourseEditFragment() {
         // Required empty public constructor
@@ -36,7 +37,7 @@ public class CourseEditFragment extends Fragment {
         editCourse = (EditText) root.findViewById(R.id.i_course);
         editStart = (EditText) root.findViewById(R.id.i_start);
         editEnd = (EditText) root.findViewById(R.id.i_end);
-        saveBtn = (Button) root.findViewById(R.id.fab_Save);
+        saveBtn = (FloatingActionButton) root.findViewById(R.id.fab_Save);
         saveBtn.setOnClickListener(insert);
 
 
@@ -46,6 +47,7 @@ public class CourseEditFragment extends Fragment {
     View.OnClickListener insert = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            Log.d("testing", "in courseedit before insert");
             DatabaseHelper dbHelp = new DatabaseHelper(getActivity(), "Courses", null, 1);
             long rowID = dbHelp.insertClass(
                     editID.getText().toString(),
@@ -54,6 +56,7 @@ public class CourseEditFragment extends Fragment {
                     editStart.getText().toString(),
                     editEnd.getText().toString()
             );
+            Log.d("testing", "in courseedit after insert");
             MainActivity ma = (MainActivity) getActivity();
             ma.backToList();
         }
