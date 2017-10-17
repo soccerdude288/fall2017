@@ -1,7 +1,9 @@
 package com.example.taylor.cs3270a7;
 
+
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -32,6 +34,23 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Log.d("testing", "in onCreate main");
         setContentView(R.layout.activity_main);
+
+        //used in an attempt to make sure clicking the back button properly set state,
+        //but this was also getting called when adding new fragments, essentially
+        //breaking the app
+        /*
+        getSupportFragmentManager().addOnBackStackChangedListener(
+                new FragmentManager.OnBackStackChangedListener() {
+                    public void onBackStackChanged() {
+                        if(getAppState() == appStateVal.EDIT){
+                            setAppState(appStateVal.VIEW);
+                        }
+                        else if(getAppState() == appStateVal.VIEW){
+                            setAppState(appStateVal.LIST);
+                        }
+                    }
+                });
+        */
     }
 
     public void goToEdit(){
@@ -116,5 +135,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
+
 
 }
