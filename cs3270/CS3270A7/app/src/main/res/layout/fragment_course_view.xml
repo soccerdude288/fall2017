@@ -5,6 +5,9 @@
     android:orientation="vertical"
     tools:context="com.example.taylor.cs3270a7.CourseViewFragment">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     <!-- TODO: Update blank fragment layout -->
     <TableLayout
         android:layout_width="match_parent"
@@ -126,5 +129,6 @@
         </TableRow>
 
     </TableLayout>
+    </ScrollView>
 
 </LinearLayout>

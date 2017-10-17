@@ -4,7 +4,6 @@ package com.example.taylor.cs3270a7;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
 import android.support.v4.widget.CursorAdapter;
@@ -65,6 +64,6 @@ public class CourseListFragment extends ListFragment {
         super.onListItemClick(l, v, position, id);
         Log.d("testing", "in courselistfrag onlistitemclick");
         MainActivity ma = (MainActivity) getActivity();
-        ma.populateClass(id);
+        ma.goToView(id);
     }
 }

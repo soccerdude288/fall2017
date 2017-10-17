@@ -33,7 +33,7 @@ public class DeleteConfirmDialogFragment extends DialogFragment {
                     public void onClick(DialogInterface dialog, int id){
                         MainActivity ma = (MainActivity) getActivity();
                         ma.deleteRecord();
-                        ma.backToList();
+                        ma.goToList();
                     }
                 }).create();
         return dialog;

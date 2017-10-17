@@ -47,7 +47,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         return rowID;
     }
 
-    public long updateClass(int _id ,String id, String name, String course, String start, String end){
+    public long updateClass(long _id ,String id, String name, String course, String start, String end){
         long rowID = -1;
 
         ContentValues newClass = new ContentValues();

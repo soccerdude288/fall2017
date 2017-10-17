@@ -1,6 +1,8 @@
 package com.example.taylor.cs3270a7;
 
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -77,6 +79,10 @@ public class CourseViewFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         MainActivity ma = (MainActivity) getActivity();
         long id = ma.getIdHelper();
+        if(id == 0){
+            SharedPreferences sp = getActivity().getPreferences(Context.MODE_PRIVATE);
+            id = sp.getLong("curID", 0);
+        }
         populateClass(id);
     }
 
@@ -84,14 +90,16 @@ public class CourseViewFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_edit:
-                Snackbar.make(root, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                MainActivity ma = (MainActivity) getActivity();
+                ma.goToEdit(ma.getIdHelper());
+                //Snackbar.make(root, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
                 return true;
 
             case R.id.action_delete:
                 DeleteConfirmDialogFragment dialog = new DeleteConfirmDialogFragment();
                 dialog.setCancelable(false);
                 dialog.show(getActivity().getSupportFragmentManager(), "Delete Confirm");
-                Snackbar.make(root, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                //Snackbar.make(root, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
                 return true;
 
             default:
