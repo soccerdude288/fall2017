@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">CS3270A8Earl</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_testfab">testfab</string>
+    <string name="s_id">ID</string>
+    <string name="s_name">Name</string>
+    <string name="s_course">Course Code</string>
+    <string name="s_start">Start At</string>
+    <string name="s_end">End At</string>
+</resources>
