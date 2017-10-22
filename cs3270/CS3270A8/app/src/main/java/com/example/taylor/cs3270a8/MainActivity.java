@@ -3,11 +3,20 @@ package com.example.taylor.cs3270a8;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
 import com.google.gson.Gson;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
+
+import javax.net.ssl.HttpsURLConnection;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,6 +37,39 @@ public class MainActivity extends AppCompatActivity {
 
     public void setAppState(appStateVal av){
         this.appState = av;
+    }
+
+    public class getCanvasCourses extends AsyncTask<String, Integer, String>{
+        String AUTH_TOKEN = Authentication.KEY;
+        String rawJson = "";
+
+        @Override
+        protected String doInBackground(String... strings) {
+            Log.d("taylorTest", "In AsyncTask getCanvasCourses");
+            try{
+                URL url = new URL("https://weber.instructure.com/api/v1/courses");
+                HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
+                conn.setRequestMethod("GET");
+                conn.setRequestProperty("Authorization", "Bearer " + AUTH_TOKEN);
+                conn.connect();
+                int status = conn.getResponseCode();
+                switch (status){
+                    case 200:
+                    case 201:
+                        BufferedReader br =
+                                new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                        rawJson = br.readLine();
+                }
+            }
+            catch (MalformedURLException e){
+                Log.d("taylorTest",e.getMessage());
+            }
+            catch (IOException e){
+                Log.d("taylorTest",e.getMessage());
+            }
+
+            return null;
+        }
     }
 
     @Override
