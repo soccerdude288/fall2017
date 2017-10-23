@@ -7,8 +7,12 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -39,37 +43,9 @@ public class MainActivity extends AppCompatActivity {
         this.appState = av;
     }
 
-    public class getCanvasCourses extends AsyncTask<String, Integer, String>{
-        String AUTH_TOKEN = Authentication.KEY;
-        String rawJson = "";
 
-        @Override
-        protected String doInBackground(String... strings) {
-            Log.d("taylorTest", "In AsyncTask getCanvasCourses");
-            try{
-                URL url = new URL("https://weber.instructure.com/api/v1/courses");
-                HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
-                conn.setRequestMethod("GET");
-                conn.setRequestProperty("Authorization", "Bearer " + AUTH_TOKEN);
-                conn.connect();
-                int status = conn.getResponseCode();
-                switch (status){
-                    case 200:
-                    case 201:
-                        BufferedReader br =
-                                new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                        rawJson = br.readLine();
-                }
-            }
-            catch (MalformedURLException e){
-                Log.d("taylorTest",e.getMessage());
-            }
-            catch (IOException e){
-                Log.d("taylorTest",e.getMessage());
-            }
-
-            return null;
-        }
+    public MainActivity getMa(){
+        return this;
     }
 
     @Override
@@ -133,6 +109,18 @@ public class MainActivity extends AppCompatActivity {
                 .commit();
         this.id = id;
     }
+
+    public void goToAssignments(long id){
+        setAppState(appStateVal.VIEW);
+        CourseAssignments ca = new CourseAssignments();
+        this.id = id;
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.top, ca, "TO")
+                .addToBackStack(null)
+                .commit();
+
+    }
+
     public void deleteRecord(){
         DatabaseHelper dbHelp = new DatabaseHelper(this, "Courses", null, 1);
         dbHelp.deleteOneClass(this.id);
@@ -180,7 +168,4 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-
-
-
 }
