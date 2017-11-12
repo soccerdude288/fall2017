@@ -42,7 +42,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     }
 
     public long insertMovie(String title, String date, String genre,
-                            String runtime, String tagline, String rating, byte[] poster, String releaseDate){
+                            String runtime, String tagline, String rating, String poster, String releaseDate){
         long rowID = -1;
 
         ContentValues newMovie = new ContentValues();
@@ -63,7 +63,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     }
 
     public long updateMovie(long _id, String title, String date, String genre,
-                            String runtime, String tagline, String rating, byte[] poster, String releaseDate){
+                            String runtime, String tagline, String rating, String poster, String releaseDate){
         long rowID = -1;
 
         ContentValues newMovie = new ContentValues();
@@ -124,7 +124,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         if(open() != null){
             String createQuery = "CREATE TABLE movies" +
                     "(_id integer primary key autoincrement," +
-                    "title TEXT, date TEXT, genre TEXT, runtime TEXT, tagline TEXT, rating TEXT, poster BLOB, releaseDate TEXT);";
+                    "title TEXT, date TEXT, genre TEXT, runtime TEXT, tagline TEXT, rating TEXT, poster TEXT, releaseDate TEXT);";
             String dropQuery = "DROP TABLE movies";
             database.execSQL(dropQuery);
             database.execSQL(createQuery);
@@ -137,7 +137,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         Log.d("testing", "in onCreate dbhelper");
         String createQuery = "CREATE TABLE movies" +
                 "(_id integer primary key autoincrement," +
-                "title TEXT, date TEXT, genre TEXT, runtime TEXT, tagline TEXT, rating TEXT, poster BLOB, releaseDate TEXT);";
+                "title TEXT, date TEXT, genre TEXT, runtime TEXT, tagline TEXT, rating TEXT, poster TEXT, releaseDate TEXT);";
         db.execSQL(createQuery);
     }
 

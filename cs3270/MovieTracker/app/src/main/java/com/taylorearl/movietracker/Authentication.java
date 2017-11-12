@@ -5,5 +5,5 @@ package com.taylorearl.movietracker;
  */
 
 public class Authentication {
-    final static String KEY = "14~dAaM5QkpTfE99euddQWahVR7y9hV3Nz9HJT2IzxCD4mmqS6xst3uYWQ32fWdI4NA";
+    final static String KEY = "199a2c25ba030947b391533b12c543db";
 }
