@@ -1,14 +1,14 @@
-using System;
+﻿using System;
 using System.Data;
 using System.Data.OleDb;
 using System.IO;
 using System.Reflection;
 
-    /// <summary>
-    /// Class used to access the database.
-    /// </summary>
-	public class clsDataAccess
-	{
+
+namespace assignment6
+{
+    class clsDataAccess
+    {
         /// <summary>
         /// Connection string to the database.
         /// </summary>
@@ -18,9 +18,9 @@ using System.Reflection;
         /// Constructor that sets the connection string to the database
         /// </summary>
 		public clsDataAccess()
-		{
-            sConnectionString = @"Provider=Microsoft.Jet.OLEDB.4.0;Data source= " + Directory.GetCurrentDirectory() + "\\Books.mdb";
-		}
+        {
+            sConnectionString = @"Provider=Microsoft.Jet.OLEDB.4.0;Data source= " + Directory.GetCurrentDirectory() + "\\ReservationSystem.mdb";
+        }
 
         /// <summary>
         /// This method takes an SQL statment that is passed in and executes it.  The resulting values
@@ -31,9 +31,9 @@ using System.Reflection;
         /// <param name="iRetVal">Reference parameter that returns the number of selected rows.</param>
         /// <returns>Returns a DataSet that contains the data from the SQL statement.</returns>
 		public DataSet ExecuteSQLStatement(string sSQL, ref int iRetVal)
-		{
-			try
-			{
+        {
+            try
+            {
                 //Create a new DataSet
                 DataSet ds = new DataSet();
 
@@ -59,12 +59,12 @@ using System.Reflection;
 
                 //return the DataSet
                 return ds;
-			}
-			catch (Exception ex)
-			{
+            }
+            catch (Exception ex)
+            {
                 throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
-			}
-		}
+            }
+        }
 
         /// <summary>
         /// This method takes an SQL statment that is passed in and executes it.  The resulting single 
@@ -73,9 +73,9 @@ using System.Reflection;
         /// <param name="sSQL">The SQL statement to be executed.</param>
         /// <returns>Returns a string from the scalar SQL statement.</returns>
 		public string ExecuteScalarSQL(string sSQL)
-		{
-			try
-			{
+        {
+            try
+            {
                 //Holds the return value
                 object obj;
 
@@ -107,22 +107,22 @@ using System.Reflection;
                     //Return the value
                     return obj.ToString();
                 }
-			}
-			catch (Exception ex)
-			{
+            }
+            catch (Exception ex)
+            {
                 throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
-			}
-		}
+            }
+        }
 
-		/// <summary>
+        /// <summary>
         /// This method takes an SQL statment that is a non query and executes it.
         /// </summary>
         /// <param name="sSQL">The SQL statement to be executed.</param>
         /// <returns>Returns the number of rows affected by the SQL statement.</returns>
-		public int ExecuteNonQuery(string sSQL)
-		{
-			try
-			{
+        public int ExecuteNonQuery(string sSQL)
+        {
+            try
+            {
                 //Number of rows affected
                 int iNumRows;
 
@@ -141,10 +141,11 @@ using System.Reflection;
 
                 //return the number of rows affected
                 return iNumRows;
-			}
-			catch (Exception ex)
-			{
+            }
+            catch (Exception ex)
+            {
                 throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
-			}
-		}
+            }
+        }
+    }
 }
