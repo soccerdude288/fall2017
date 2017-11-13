@@ -1,0 +1,103 @@
+package com.taylorearl.movietracker;
+
+import android.util.Log;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.net.ssl.HttpsURLConnection;
+
+/**
+ * Created by taylor on 11/11/17.
+ */
+
+public class TheMovieDBAPI {
+    private String URL_SCHEME = "https://";
+    private String URL_AUTHORITY = "api.themoviedb.org/3";
+    private String URL_PATH_SEARCH = "/search";
+    private String URL_PATH_MOVIE = "/movie";
+    private String URL_PARAM ="?";
+    private String URL_QUERY_PARAM_API_KEY = "api_key=";
+    private String URL_QUERY = "query=";
+    private String URL_PARAM_APPEND = "&";
+    private String URL_PARAM_PAGE = "page=";
+    private String URL_PARAM_PAGE_VALUE ="1"
+    private String URL_QUERY_VALUE_API_KEY = Authentication.KEY;
+    public String rtnValue = "";
+
+
+    public String searchMovie(String searchTitle){
+        String rawJSON = apiSearch(URL_PATH_MOVIE, searchTitle);
+        return rtnValue;
+    }
+
+
+    private String apiSearch(String URL_PATH, String searchValue){
+        String rawJson = "";
+        StringBuilder urlString = new StringBuilder();
+        urlString.append(URL_SCHEME);
+        urlString.append(URL_AUTHORITY);
+        urlString.append(URL_PATH_SEARCH);
+        urlString.append(URL_PATH);
+        urlString.append(URL_PARAM);
+        urlString.append(URL_QUERY_PARAM_API_KEY);
+        urlString.append(URL_QUERY_VALUE_API_KEY);
+        urlString.append(URL_PARAM_APPEND);
+        urlString.append(URL_PARAM_PAGE);
+        urlString.append(URL_PARAM_PAGE_VALUE);
+        urlString.append(URL_PARAM_APPEND);
+        urlString.append(URL_QUERY);
+        try {
+            urlString.append(URLEncoder.encode(searchValue, "UTF-8"));
+            URL url = new URL(urlString.toString());
+            HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+            conn.connect();
+            int status = conn.getResponseCode();
+            switch (status){
+                case 200:
+                case 201:
+                    BufferedReader br =
+                            new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                    rawJson = br.readLine();
+                    Log.d("taylorTest", "ras JSON String Length = " + rawJson.length());
+                    Log.d("taylorTest", "ras JSON first 256 chars = " + rawJson.substring(0, 256));
+                    Log.d("taylorTest", "ras JSON last 256 chars = " + rawJson.substring(rawJson.length() - 256, rawJson.length()));
+            }
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return rawJson;
+    }
+
+
+    private List<Movies> parseMovies(String rawJSON){
+        GsonBuilder gsonb = new GsonBuilder();
+        Gson gson = gsonb.create();
+
+        List<Movies> movies = new ArrayList<Movies>();
+        try{
+            movies = (List<Movies>) gson.fromJson(rawJSON, Movies.class);
+            //Log.d("taylorTest", "number of assignments returned is: " + movies.length);
+            //Log.d("taylorTest", "First Course returned is: " + movies.indexOf(0).title);
+        } catch(Exception e){
+            Log.d("taylorTest", e.getMessage());
+        }
+
+        return movies;
+    }
+}
