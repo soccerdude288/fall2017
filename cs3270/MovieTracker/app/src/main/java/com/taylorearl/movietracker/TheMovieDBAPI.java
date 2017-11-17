@@ -1,5 +1,6 @@
 package com.taylorearl.movietracker;
 
+import android.os.AsyncTask;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -31,9 +32,18 @@ public class TheMovieDBAPI {
     private String URL_QUERY = "query=";
     private String URL_PARAM_APPEND = "&";
     private String URL_PARAM_PAGE = "page=";
-    private String URL_PARAM_PAGE_VALUE ="1"
+    private String URL_PARAM_PAGE_VALUE ="1";
     private String URL_QUERY_VALUE_API_KEY = Authentication.KEY;
     public String rtnValue = "";
+    private String URL_PATH = "";
+    private String searchValue = "";
+    public List<Movies> movieList = new ArrayList<>();
+    public boolean hasResults = false;
+
+    public void setSearchParams(String searchValue){
+        this.URL_PATH = URL_PATH_MOVIE;
+        this.searchValue = searchValue;
+    }
 
 
     public String searchMovie(String searchTitle){
@@ -85,19 +95,96 @@ public class TheMovieDBAPI {
     }
 
 
-    private List<Movies> parseMovies(String rawJSON){
-        GsonBuilder gsonb = new GsonBuilder();
-        Gson gson = gsonb.create();
+    public class movieSearch extends AsyncTask<String, Integer, String>{
 
-        List<Movies> movies = new ArrayList<Movies>();
-        try{
-            movies = (List<Movies>) gson.fromJson(rawJSON, Movies.class);
-            //Log.d("taylorTest", "number of assignments returned is: " + movies.length);
-            //Log.d("taylorTest", "First Course returned is: " + movies.indexOf(0).title);
-        } catch(Exception e){
-            Log.d("taylorTest", e.getMessage());
+        @Override
+        protected String doInBackground(String... strings) {
+            Log.d("taylorTest", "In do in background api");
+            String rawJson = "";
+            StringBuilder urlString = new StringBuilder();
+            urlString.append(URL_SCHEME);
+            urlString.append(URL_AUTHORITY);
+            urlString.append(URL_PATH_SEARCH);
+            urlString.append(URL_PATH);
+            urlString.append(URL_PARAM);
+            urlString.append(URL_QUERY_PARAM_API_KEY);
+            urlString.append(URL_QUERY_VALUE_API_KEY);
+            urlString.append(URL_PARAM_APPEND);
+            urlString.append(URL_PARAM_PAGE);
+            urlString.append(URL_PARAM_PAGE_VALUE);
+            urlString.append(URL_PARAM_APPEND);
+            urlString.append(URL_QUERY);
+            try {
+                urlString.append(URLEncoder.encode(searchValue, "UTF-8"));
+                URL url = new URL(urlString.toString());
+                HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
+                conn.setRequestMethod("GET");
+                conn.connect();
+                Log.d("taylorTest", "In do in background api: Connection Made");
+                int status = conn.getResponseCode();
+                switch (status){
+                    case 200:
+                    case 201:
+                        BufferedReader br =
+                                new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                        rawJson = br.readLine();
+                        Log.d("taylorTest", "ras JSON String Length = " + rawJson.length());
+                        Log.d("taylorTest", "ras JSON first 256 chars = " + rawJson.substring(0, 256));
+                        Log.d("taylorTest", "ras JSON last 256 chars = " + rawJson.substring(rawJson.length() - 256, rawJson.length()));
+                }
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try{
+                Log.d("taylorTest", "Attempting to build movie list");
+                MovieResponse resultPage = parseMovies(rawJson);
+                for(Movies movie:resultPage.results){
+                    Log.d("taylorTest", "*** Movie Name: " + movie.title);
+                    movieList.add(movie);
+                }
+                Log.d("taylorTest", "Movie List Built");
+                hasResults = true;
+                int count = movieList.size();
+            } catch (Exception e){
+                Log.d("taylorTest", e.getMessage());
+            }
+            return rawJson;
         }
 
-        return movies;
+        @Override
+        protected void onPostExecute(String s){
+            super.onPostExecute(s);
+            /*
+            try{
+                MovieResponse resultPage = parseMovies(s);
+                    for(Movies movie:resultPage.results){
+                        movieList.add(movie);
+                    }
+                    hasResults = true;
+                    int count = movieList.size();
+            } catch (Exception e){
+                Log.d("taylorTest", e.getMessage());
+            }
+            */
+        }
+
+        public MovieResponse parseMovies(String rawJSON){
+            GsonBuilder gsonb = new GsonBuilder();
+            Gson gson = gsonb.create();
+            MovieResponse movies = new MovieResponse();
+            try{
+                movies = gson.fromJson(rawJSON, MovieResponse.class);
+                //Log.d("taylorTest", "number of assignments returned is: " + movies.length);
+                //Log.d("taylorTest", "First Course returned is: " + movies.indexOf(0).title);
+            } catch(Exception e){
+                Log.d("taylorTest", e.getMessage());
+            }
+
+            return movies;
+        }
     }
 }

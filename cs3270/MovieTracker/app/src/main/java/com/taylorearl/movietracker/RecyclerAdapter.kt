@@ -51,12 +51,13 @@ class RecyclerAdapter (private val movies: ArrayList<Movies>) : RecyclerView.Ada
 
         fun bindMovie(movie: Movies) {
             this.movie = movie
-            Picasso.with(view.context).load(movie.posterURL).into(view.imageView2)
+            Picasso.with(view.context).load("http://image.tmdb.org/t/p/w500/" + movie.poster_path).into(view.imageView2)
             view.movieTitle.text = movie.title
-            view.movietagline.text = movie.tagLine
-            view.movieReleaseDate.text = movie.releaseDate
-            view.movieRating.text = movie.rating
-            view.movieGenre.text = movie.genre
+            view.movietagline.text = movie.overview
+            view.movieReleaseDate.text = movie.release_date
+            view.movieRating.text = movie.vote_average
+            view.movieGenre.text = movie.genre_ids.toString();
         }
     }
 }
+

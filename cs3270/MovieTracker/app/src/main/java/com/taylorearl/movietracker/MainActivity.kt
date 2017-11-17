@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView
 import com.taylorearl.movietracker.R.id.mainRecView
 import com.taylorearl.movietracker.R.id.navigation
 import kotlinx.android.synthetic.main.activity_main.*
+import android.support.v7.widget.GridLayoutManager
 
 class MainActivity : AppCompatActivity() {
     private lateinit var linearLayoutManager: LinearLayoutManager
@@ -22,11 +23,16 @@ class MainActivity : AppCompatActivity() {
                 //message.setText(R.string.title_home)
                 return@OnNavigationItemSelectedListener true
             }
-            R.id.navigation_dashboard -> {
+            R.id.navigation_stuff -> {
                 //message.setText(R.string.title_myStuff)
                 return@OnNavigationItemSelectedListener true
             }
-            R.id.navigation_notifications -> {
+            R.id.navigation_search -> {
+                supportFragmentManager
+                        .beginTransaction()
+                        .add(R.id.container, SearchFrag(), "searchFragment")
+                        .addToBackStack(null)
+                        .commit()
                 //message.setText(R.string.title_search)
                 return@OnNavigationItemSelectedListener true
             }

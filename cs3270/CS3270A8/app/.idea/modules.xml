@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/../CS3270A8.iml" filepath="$PROJECT_DIR$/../CS3270A8.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app.iml" filepath="$PROJECT_DIR$/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../gson-2.6.2/gson-2.6.2.iml" filepath="$PROJECT_DIR$/../gson-2.6.2/gson-2.6.2.iml" />
+    </modules>
+  </component>
+</project>
