@@ -9,6 +9,8 @@ import com.taylorearl.movietracker.R.id.mainRecView
 import com.taylorearl.movietracker.R.id.navigation
 import kotlinx.android.synthetic.main.activity_main.*
 import android.support.v7.widget.GridLayoutManager
+import android.view.View
+import kotlinx.android.synthetic.main.fragment_search.*
 
 class MainActivity : AppCompatActivity() {
     private lateinit var linearLayoutManager: LinearLayoutManager
@@ -43,30 +45,35 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        linearLayoutManager = LinearLayoutManager(this)
-        mainRecView.layoutManager = linearLayoutManager
-        adapter = RecyclerAdapter(movieList)
-        mainRecView.adapter = adapter
-        setRecyclerViewScrollListener()
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
     }
 
     override fun onStart() {
         super.onStart()
-        /*
-        if (movieList.size == 0) {
-            requestMovie()
-        }
-        */
     }
+
+    override fun onResume() {
+        super.onResume()
+        val api = TheMovieDBAPI()
+        api.setPopularSearchParams()
+        //loadingPanel.setVisibility(View.VISIBLE)
+        val movieList = api.popularSearch().execute("")
+        //loadingPanel.setVisibility(View.GONE)
+        linearLayoutManager = LinearLayoutManager(this)
+        mainRecView.layoutManager = linearLayoutManager
+        adapter = RecyclerAdapter(api.movieList as ArrayList<Movies>)
+        mainRecView.adapter = adapter
+        setRecyclerViewScrollListener()
+    }
+
     /*
-    override fun receivedNewPhoto(newMovie: Movies) {
-        runOnUiThread {
-            movieList.add(newMovie)
-            adapter.notifyItemInserted(movieList.size)
+        override fun receivedNewPhoto(newMovie: Movies) {
+            runOnUiThread {
+                movieList.add(newMovie)
+                adapter.notifyItemInserted(movieList.size)
+            }
         }
-    }
-*/
+    */
     private fun setRecyclerViewScrollListener() {
         mainRecView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {

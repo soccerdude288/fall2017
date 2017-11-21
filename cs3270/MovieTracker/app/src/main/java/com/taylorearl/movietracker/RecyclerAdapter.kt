@@ -39,6 +39,9 @@ class RecyclerAdapter (private val movies: ArrayList<Movies>) : RecyclerView.Ada
         override fun onClick(v: View) {
             Log.d("RecyclerView", "CLICK!")
             val context = itemView.context
+            var db = DatabaseHelper(context, "Movies", null, 1)
+            //db.insertMovie()
+            //val movie = movie.get(position);
             //val showMovieIntent = Intent(context, PhotoActivity::class.java)
             //showMovieIntent.putExtra(PHOTO_KEY, photo)
             //context.startActivity(showMovieIntent)
