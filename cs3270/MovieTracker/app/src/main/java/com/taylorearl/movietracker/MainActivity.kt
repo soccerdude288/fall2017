@@ -57,23 +57,10 @@ class MainActivity : AppCompatActivity() {
         val api = TheMovieDBAPI()
         api.setPopularSearchParams()
         //loadingPanel.setVisibility(View.VISIBLE)
-        val movieList = api.popularSearch().execute("")
+        val movieList = api.popularSearch(this).execute("")
         //loadingPanel.setVisibility(View.GONE)
-        linearLayoutManager = LinearLayoutManager(this)
-        mainRecView.layoutManager = linearLayoutManager
-        adapter = RecyclerAdapter(api.movieList as ArrayList<Movies>)
-        mainRecView.adapter = adapter
-        setRecyclerViewScrollListener()
     }
 
-    /*
-        override fun receivedNewPhoto(newMovie: Movies) {
-            runOnUiThread {
-                movieList.add(newMovie)
-                adapter.notifyItemInserted(movieList.size)
-            }
-        }
-    */
     private fun setRecyclerViewScrollListener() {
         mainRecView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
@@ -86,5 +73,13 @@ class MainActivity : AppCompatActivity() {
                 */
             }
         })
+    }
+
+    public fun setList(ml: MutableList<Movies>){
+        linearLayoutManager = LinearLayoutManager(this)
+        mainRecView.layoutManager = linearLayoutManager
+        adapter = RecyclerAdapter(ml as ArrayList<Movies>)
+        mainRecView.adapter = adapter
+        setRecyclerViewScrollListener()
     }
 }

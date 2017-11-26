@@ -1,10 +1,14 @@
 package com.taylorearl.movietracker;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -45,6 +49,7 @@ public class TheMovieDBAPI {
         this.URL_PATH = URL_PATH_MOVIE;
         this.searchValue = searchValue;
     }
+
 
     public void setPopularSearchParams(){
         this.URL_PATH = URL_PATH_MOVIE;
@@ -147,6 +152,12 @@ public class TheMovieDBAPI {
 
     public class popularSearch extends AsyncTask<String, Integer, String>{
 
+        private MainActivity mainActivity;
+
+        public popularSearch(@NotNull MainActivity mainActivity) {
+            this.mainActivity = mainActivity;
+        }
+
         @Override
         protected String doInBackground(String... strings) {
             Log.d("taylorTest", "In do in background api");
@@ -199,6 +210,7 @@ public class TheMovieDBAPI {
                 Log.d("taylorTest", "Movie List Built");
                 hasResults = true;
                 int count = movieList.size();
+                mainActivity.setList(movieList);
             } catch (Exception e){
                 Log.d("taylorTest", e.getMessage());
             }
@@ -221,6 +233,8 @@ public class TheMovieDBAPI {
             } catch(Exception e){
                 Log.d("taylorTest", e.getMessage());
             }
+
+
 
             return movies;
         }
