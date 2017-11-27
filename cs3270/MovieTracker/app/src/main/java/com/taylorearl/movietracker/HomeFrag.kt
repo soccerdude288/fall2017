@@ -41,7 +41,7 @@ class HomeFrag : Fragment() {
         }
         linearLayoutManager = LinearLayoutManager(context)
         mainRecView.layoutManager = linearLayoutManager
-        adapter = RecyclerAdapter(api.movieList as ArrayList<Movies>)
+        adapter = RecyclerAdapter(api.movieList as ArrayList<Movies>, this)
         mainRecView.adapter = adapter
         setRecyclerViewScrollListener()
     }

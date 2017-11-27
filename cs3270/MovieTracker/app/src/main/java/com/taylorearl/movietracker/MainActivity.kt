@@ -47,4 +47,14 @@ class MainActivity : AppCompatActivity() {
                 .commit()
     }
 
+    fun showMovieDetails(md:MovieDetailResponse){
+        var movieDetails = MovieDetails();
+        movieDetails.setDetails(md);
+        supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.mainView, movieDetails, "movieDetails")
+                .addToBackStack(null)
+                .commit()
+    }
+
 }

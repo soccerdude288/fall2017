@@ -41,7 +41,7 @@
                 card_view:layout_constraintHorizontal_bias="0.065"
                 card_view:layout_constraintStart_toEndOf="@+id/imageView2"
                 card_view:layout_constraintTop_toTopOf="parent"
-                tools:textSize="18sp" />
+                tools:textSize="36sp" />
 
             <TextView
                 android:id="@+id/movietagline"
@@ -49,7 +49,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
-                android:text="MOVIE TAG LINE"
+                android:text="Release Date"
                 card_view:layout_constraintEnd_toEndOf="parent"
                 card_view:layout_constraintHorizontal_bias="0.072"
                 card_view:layout_constraintStart_toEndOf="@+id/imageView2"

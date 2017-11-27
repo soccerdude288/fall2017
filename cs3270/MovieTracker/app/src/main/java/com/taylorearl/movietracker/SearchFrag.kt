@@ -46,7 +46,7 @@ class SearchFrag : Fragment() {
                 //loadingPanel.setVisibility(View.GONE)
                 linearLayoutManager = LinearLayoutManager(activity)
                 resultsRecView.layoutManager = linearLayoutManager
-                adapter = RecyclerAdapter(api.movieList as ArrayList<Movies>)
+                adapter = RecyclerAdapter(api.movieList as ArrayList<Movies>, this)
                 resultsRecView.adapter = adapter
                 setRecyclerViewScrollListener()
                 return@OnKeyListener true
