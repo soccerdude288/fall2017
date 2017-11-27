@@ -152,12 +152,6 @@ public class TheMovieDBAPI {
 
     public class popularSearch extends AsyncTask<String, Integer, String>{
 
-        private MainActivity mainActivity;
-
-        public popularSearch(@NotNull MainActivity mainActivity) {
-            this.mainActivity = mainActivity;
-        }
-
         @Override
         protected String doInBackground(String... strings) {
             Log.d("taylorTest", "In do in background api");
@@ -210,7 +204,6 @@ public class TheMovieDBAPI {
                 Log.d("taylorTest", "Movie List Built");
                 hasResults = true;
                 int count = movieList.size();
-                mainActivity.setList(movieList);
             } catch (Exception e){
                 Log.d("taylorTest", e.getMessage());
             }

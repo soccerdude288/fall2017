@@ -3,26 +3,20 @@ package com.taylorearl.movietracker
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import com.taylorearl.movietracker.R.id.mainRecView
-import com.taylorearl.movietracker.R.id.navigation
 import kotlinx.android.synthetic.main.activity_main.*
-import android.support.v7.widget.GridLayoutManager
-import android.view.View
-import kotlinx.android.synthetic.main.fragment_search.*
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var linearLayoutManager: LinearLayoutManager
-    private lateinit var adapter: RecyclerAdapter
-    private val lastVisibleItemPosition: Int
-        get() = linearLayoutManager.findLastVisibleItemPosition()
-    private var movieList: ArrayList<Movies> = ArrayList()
+
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.navigation_home -> {
                 //message.setText(R.string.title_home)
+                supportFragmentManager
+                        .beginTransaction()
+                        .replace(R.id.mainView, HomeFrag(), "homeFragment")
+                        .addToBackStack(null)
+                        .commit()
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_stuff -> {
@@ -32,7 +26,7 @@ class MainActivity : AppCompatActivity() {
             R.id.navigation_search -> {
                 supportFragmentManager
                         .beginTransaction()
-                        .add(R.id.container, SearchFrag(), "searchFragment")
+                        .replace(R.id.mainView, SearchFrag(), "searchFragment")
                         .addToBackStack(null)
                         .commit()
                 //message.setText(R.string.title_search)
@@ -46,40 +40,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+        supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.mainView, HomeFrag(), "homeFragment")
+                .addToBackStack(null)
+                .commit()
     }
 
-    override fun onStart() {
-        super.onStart()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        val api = TheMovieDBAPI()
-        api.setPopularSearchParams()
-        //loadingPanel.setVisibility(View.VISIBLE)
-        val movieList = api.popularSearch(this).execute("")
-        //loadingPanel.setVisibility(View.GONE)
-    }
-
-    private fun setRecyclerViewScrollListener() {
-        mainRecView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
-                super.onScrollStateChanged(recyclerView, newState)
-                val totalItemCount = recyclerView!!.layoutManager.itemCount
-                /*
-                if (!imageRequester.isLoadingData && totalItemCount == lastVisibleItemPosition + 1) {
-                    requestPhoto()
-                }
-                */
-            }
-        })
-    }
-
-    public fun setList(ml: MutableList<Movies>){
-        linearLayoutManager = LinearLayoutManager(this)
-        mainRecView.layoutManager = linearLayoutManager
-        adapter = RecyclerAdapter(ml as ArrayList<Movies>)
-        mainRecView.adapter = adapter
-        setRecyclerViewScrollListener()
-    }
 }

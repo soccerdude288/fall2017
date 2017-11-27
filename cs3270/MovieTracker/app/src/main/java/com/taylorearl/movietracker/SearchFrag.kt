@@ -32,7 +32,7 @@ class SearchFrag : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        loadingPanel.setVisibility(View.GONE)
+        //loadingPanel.setVisibility(View.GONE)
         Log.d("taylorTest", "In onStart search fragment")
         searchBox.setOnKeyListener(View.OnKeyListener{v, keyCode, event ->
             Log.d("taylorTest", "In key listener search fragment")
@@ -41,9 +41,9 @@ class SearchFrag : Fragment() {
                 val searchValue = searchBox.text.toString();
                 val api = TheMovieDBAPI()
                 api.setSearchParams(searchValue)
-                loadingPanel.setVisibility(View.VISIBLE)
+                //loadingPanel.setVisibility(View.VISIBLE)
                 val movieList = api.movieSearch().execute("")
-                loadingPanel.setVisibility(View.GONE)
+                //loadingPanel.setVisibility(View.GONE)
                 linearLayoutManager = LinearLayoutManager(activity)
                 resultsRecView.layoutManager = linearLayoutManager
                 adapter = RecyclerAdapter(api.movieList as ArrayList<Movies>)
