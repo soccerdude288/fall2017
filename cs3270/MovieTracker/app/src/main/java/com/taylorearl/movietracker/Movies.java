@@ -21,4 +21,5 @@ public class Movies {
     protected String vote_count;
     protected String video;
     protected String vote_average;
+    protected String dbID;
 }

@@ -3,6 +3,8 @@ package com.taylorearl.movietracker
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.Toolbar
+import android.view.View
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -40,6 +42,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+        val toolbar = mainToolbar as Toolbar
+        setSupportActionBar(toolbar)
+        if (getSupportActionBar() != null) {
+            getSupportActionBar()!!.setDisplayHomeAsUpEnabled(false)
+        }
         supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.mainView, HomeFrag(), "homeFragment")
