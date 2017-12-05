@@ -34,6 +34,8 @@ class SearchFrag : Fragment() {
         super.onStart()
         //loadingPanel.setVisibility(View.GONE)
         Log.d("taylorTest", "In onStart search fragment")
+        val ma = activity as MainActivity
+        ma.supportActionBar!!.setSubtitle("Search")
         searchBox.setOnKeyListener(View.OnKeyListener{v, keyCode, event ->
             Log.d("taylorTest", "In key listener search fragment")
             if(keyCode == KeyEvent.KEYCODE_ENTER){

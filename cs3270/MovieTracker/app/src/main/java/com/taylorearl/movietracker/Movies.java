@@ -7,6 +7,7 @@ import java.util.List;
  */
 
 public class Movies {
+    protected String _id;
     protected String poster_path;
     protected String adult;
     protected String overview;
@@ -21,5 +22,5 @@ public class Movies {
     protected String vote_count;
     protected String video;
     protected String vote_average;
-    protected String dbID;
+
 }

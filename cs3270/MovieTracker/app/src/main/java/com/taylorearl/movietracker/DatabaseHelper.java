@@ -17,8 +17,8 @@ import java.util.List;
 public class DatabaseHelper extends SQLiteOpenHelper{
     private SQLiteDatabase database;
 
-    public DatabaseHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version){
-        super(context, name, factory,version);
+    public DatabaseHelper(Context context){
+        super(context, "Movies", null,1);
     }
 
     //MOVIE
@@ -44,8 +44,6 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         }
     }
 
-    //public long insertMovie(String title, String date, String genre,
-                            // runtime, String tagline, String rating, String poster, String releaseDate){
     public long insertMovie(MovieDetailResponse m){
         long rowID = -1;
 
@@ -66,8 +64,6 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         return rowID;
     }
 
-    //public long updateMovie(long _id, String title, String date, String genre,
-    //                        String runtime, String tagline, String rating, String poster, String releaseDate){
     public long updateMovie(MovieDetailResponse m, long _id){
         long rowID = -1;
 
@@ -101,24 +97,25 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         while (!cursor.isAfterLast()) {
             Movies movie = new Movies();
             //_id
-            movie.id = cursor.getString(0);
+            movie._id = cursor.getString(0);
             //title
             movie.title = cursor.getString(1);
             //dbID
-            movie.dbID = cursor.getString(2);
+            movie.id = cursor.getString(2);
             //genre
             //movie.genre_ids = cursor.getString(3);
             //runtime
-            movie.run = cursor.getString(4);
+            //movie.run = cursor.getString(4);
             //tagline
-            movie.id = cursor.getString(5);
+            //movie = cursor.getString(5);
             //rating
-            movie.id = cursor.getString(6);
+            movie.vote_average = cursor.getString(6);
             //poster
-            movie.id = cursor.getString(7);
+            movie.poster_path = cursor.getString(7);
             //releaseDate
-            movie.id = cursor.getString(8);
+            movie.release_date = cursor.getString(8);
 
+            movies.add(movie);
             cursor.moveToNext();
         }
 
@@ -126,21 +123,59 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         return movies;
     }
 
-    public Cursor getOneMovie(long id){
+    public Movies getOneMovie(String id){
         Cursor cursor = null;
+        Movies movie = new Movies();
         if(open() != null){
             Log.d("testing", "In getOneMovie");
-            cursor = database.rawQuery("SELECT * FROM movies WHERE _id=" +id, null);
+            cursor = database.rawQuery("SELECT * FROM movies WHERE dbID=" +id, null);
         }
-        return cursor;
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            //_id
+            movie._id = cursor.getString(0);
+            //title
+            movie.title = cursor.getString(1);
+            //dbID
+            movie.id = cursor.getString(2);
+            //genre
+            //movie.genre_ids = cursor.getString(3);
+            //runtime
+            //movie.run = cursor.getString(4);
+            //tagline
+            //movie = cursor.getString(5);
+            //rating
+            movie.vote_average = cursor.getString(6);
+            //poster
+            movie.poster_path = cursor.getString(7);
+            //releaseDate
+            movie.release_date = cursor.getString(8);
+
+
+            cursor.moveToNext();
+        }
+        return movie;
     }
 
-    public void deleteOneMovie(long id) {
+    public boolean doesMovieExist(String id){
+        Cursor cursor = null;
+        Movies movie = new Movies();
+        if(open() != null){
+            Log.d("testing", "In getOneMovie");
+            cursor = database.rawQuery("SELECT * FROM movies WHERE dbID=" +id, null);
+        }
+        if (!(cursor.moveToFirst()) || cursor.getCount() ==0){
+            return false;
+        }
+        return true;
+    }
+
+    public void deleteOneMovie(String id) {
         long rowID = -1;
         if (open() != null) {
             Log.d("testing", "In deleteOneMovie");
             //cursor = database.rawQuery("DELETE FROM classes WHERE _id=" +id, null);
-            rowID = database.delete("movies", "_id=" + id, null);
+            rowID = database.delete("movies", "dbID=" + id, null);
             close();
         }
     }

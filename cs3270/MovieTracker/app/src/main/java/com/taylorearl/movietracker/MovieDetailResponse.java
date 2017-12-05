@@ -1,12 +1,13 @@
 package com.taylorearl.movietracker;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by Taylor on 11/26/2017.
  */
 
-public class MovieDetailResponse {
+public class MovieDetailResponse implements Serializable{
     protected String adult;
     protected String backdrop_path;
     protected BelongsToCollection belongs_to_collection;
@@ -33,27 +34,42 @@ public class MovieDetailResponse {
     protected String vote_average;
     protected String vote_count;
 
-    private class BelongsToCollection{
+    private class BelongsToCollection implements Serializable{
         String id;
         String name;
         String poster_path;
         String backdrop_path;
     }
-    private class Genres{
+    private class Genres implements Serializable{
         String id;
         String name;
     }
-    private class ProdCompanies{
+    private class ProdCompanies implements Serializable{
         String name;
         String id;
     }
-    private class ProdCountries{
+    private class ProdCountries implements Serializable{
         String iso_3166_1;
         String name;
     }
-    private class SpokenLanguages{
+    private class SpokenLanguages implements Serializable{
         String iso_639_1;
         String name;
+    }
+
+
+    public String getProductionCompanies(){
+        StringBuilder comp = new StringBuilder();
+        for (ProdCompanies c:production_companies) {
+            comp.append(c.name);
+            comp.append(", ");
+        }
+        int l = comp.length();
+        comp.deleteCharAt(l -1);
+        l = comp.length();
+        comp.deleteCharAt(l -1);
+
+        return comp.toString();
     }
 
 }
