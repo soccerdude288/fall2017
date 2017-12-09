@@ -19,6 +19,7 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -176,6 +177,8 @@ public class TheMovieDBAPI {
                 switch (status){
                     case 200:
                     case 201:
+                        Map<String, List<String>> map = conn.getHeaderFields();
+                        Log.d("taylorTest", "X-RateLimit-Limit - " + map.get("X-RateLimit-Limit"));
                         BufferedReader br =
                                 new BufferedReader(new InputStreamReader(conn.getInputStream()));
                         rawJson = br.readLine();
@@ -254,6 +257,9 @@ public class TheMovieDBAPI {
                 switch (status){
                     case 200:
                     case 201:
+
+                        Map<String, List<String>> map = conn.getHeaderFields();
+                        Log.d("taylorTest", "X-RateLimit-Limit - " + map.get("X-RateLimit-Limit"));
                         BufferedReader br =
                                 new BufferedReader(new InputStreamReader(conn.getInputStream()));
                         rawJson = br.readLine();

@@ -7,7 +7,6 @@
     tools:context="com.taylorearl.movietracker.SearchFrag">
 
     <!-- TODO: Update blank fragment layout -->
-
     <EditText
         android:id="@+id/searchBox"
         android:layout_width="match_parent"

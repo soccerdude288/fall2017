@@ -1,23 +1,21 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    tools:context="com.taylorearl.movietracker.HomeFrag">
+    android:layout_height="match_parent"
+    tools:context="com.taylorearl.movietracker.MyStuffFrag">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         android:layout_marginBottom="50dp">
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/mainRecView"
+            android:id="@+id/myMainRecView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:scrollbars="vertical" />
 
 
     </LinearLayout>
-    <!-- TODO: Update blank fragment layout -->
-
 </FrameLayout>

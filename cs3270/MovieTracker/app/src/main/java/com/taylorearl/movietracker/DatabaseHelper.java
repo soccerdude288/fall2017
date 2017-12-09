@@ -7,6 +7,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by taylor on 11/9/17.
  */
@@ -14,14 +17,14 @@ import android.util.Log;
 public class DatabaseHelper extends SQLiteOpenHelper{
     private SQLiteDatabase database;
 
-    public DatabaseHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version){
-        super(context, name, factory,version);
+    public DatabaseHelper(Context context){
+        super(context, "Movies", null,1);
     }
 
     //MOVIE
     //_id
     //title
-    //date
+    //dbID
     //genre
     //runtime
     //tagline
@@ -41,19 +44,18 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         }
     }
 
-    public long insertMovie(String title, String date, String genre,
-                            String runtime, String tagline, String rating, String poster, String releaseDate){
+    public long insertMovie(MovieDetailResponse m){
         long rowID = -1;
 
         ContentValues newMovie = new ContentValues();
-        newMovie.put("title", title);
-        newMovie.put("date", date);
-        newMovie.put("genre", genre);
-        newMovie.put("runtime", runtime);
-        newMovie.put("tagline", tagline);
-        newMovie.put("rating", rating);
-        newMovie.put("poster", poster);
-        newMovie.put("releaseDate", releaseDate);
+        newMovie.put("title", m.title);
+        newMovie.put("dbID", m.id);
+        newMovie.put("genre", m.genres.toString());
+        newMovie.put("runtime", m.runtime);
+        newMovie.put("tagline", m.tagline);
+        newMovie.put("rating", m.vote_average);
+        newMovie.put("poster", m.poster_path);
+        newMovie.put("releaseDate", m.release_date);
 
         if(open()!=null){
             rowID = database.insert("movies", null, newMovie);
@@ -62,19 +64,18 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         return rowID;
     }
 
-    public long updateMovie(long _id, String title, String date, String genre,
-                            String runtime, String tagline, String rating, String poster, String releaseDate){
+    public long updateMovie(MovieDetailResponse m, long _id){
         long rowID = -1;
 
         ContentValues newMovie = new ContentValues();
-        newMovie.put("title", title);
-        newMovie.put("date", date);
-        newMovie.put("genre", genre);
-        newMovie.put("runtime", runtime);
-        newMovie.put("tagline", tagline);
-        newMovie.put("rating", rating);
-        newMovie.put("poster", poster);
-        newMovie.put("releaseDate", releaseDate);
+        newMovie.put("title", m.title);
+        newMovie.put("dbID", m.id);
+        newMovie.put("genre", m.genres.toString());
+        newMovie.put("runtime", m.runtime);
+        newMovie.put("tagline", m.tagline);
+        newMovie.put("rating", m.vote_average);
+        newMovie.put("poster", m.poster_path);
+        newMovie.put("releaseDate", m.release_date);
 
         if(open()!=null){
             rowID = database.update("movies", newMovie, "_id=" + _id, null);
@@ -83,30 +84,98 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         return rowID;
     }
 
-    public Cursor getAllMovies(){
+    public List<Movies> getAllMovies(){
         Cursor cursor = null;
+        ArrayList<Movies> movies = new ArrayList<Movies>();
+
         if(open() != null){
             Log.d("testing", "In getAllMovies");
             cursor = database.rawQuery("SELECT * FROM movies", null);
         }
-        return cursor;
+
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            Movies movie = new Movies();
+            //_id
+            movie._id = cursor.getString(0);
+            //title
+            movie.title = cursor.getString(1);
+            //dbID
+            movie.id = cursor.getString(2);
+            //genre
+            //movie.genre_ids = cursor.getString(3);
+            //runtime
+            //movie.run = cursor.getString(4);
+            //tagline
+            //movie = cursor.getString(5);
+            //rating
+            movie.vote_average = cursor.getString(6);
+            //poster
+            movie.poster_path = cursor.getString(7);
+            //releaseDate
+            movie.release_date = cursor.getString(8);
+
+            movies.add(movie);
+            cursor.moveToNext();
+        }
+
+
+        return movies;
     }
 
-    public Cursor getOneMovie(long id){
+    public Movies getOneMovie(String id){
         Cursor cursor = null;
+        Movies movie = new Movies();
         if(open() != null){
             Log.d("testing", "In getOneMovie");
-            cursor = database.rawQuery("SELECT * FROM movies WHERE _id=" +id, null);
+            cursor = database.rawQuery("SELECT * FROM movies WHERE dbID=" +id, null);
         }
-        return cursor;
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            //_id
+            movie._id = cursor.getString(0);
+            //title
+            movie.title = cursor.getString(1);
+            //dbID
+            movie.id = cursor.getString(2);
+            //genre
+            //movie.genre_ids = cursor.getString(3);
+            //runtime
+            //movie.run = cursor.getString(4);
+            //tagline
+            //movie = cursor.getString(5);
+            //rating
+            movie.vote_average = cursor.getString(6);
+            //poster
+            movie.poster_path = cursor.getString(7);
+            //releaseDate
+            movie.release_date = cursor.getString(8);
+
+
+            cursor.moveToNext();
+        }
+        return movie;
     }
 
-    public void deleteOneMovie(long id) {
+    public boolean doesMovieExist(String id){
+        Cursor cursor = null;
+        Movies movie = new Movies();
+        if(open() != null){
+            Log.d("testing", "In getOneMovie");
+            cursor = database.rawQuery("SELECT * FROM movies WHERE dbID=" +id, null);
+        }
+        if (!(cursor.moveToFirst()) || cursor.getCount() ==0){
+            return false;
+        }
+        return true;
+    }
+
+    public void deleteOneMovie(String id) {
         long rowID = -1;
         if (open() != null) {
             Log.d("testing", "In deleteOneMovie");
             //cursor = database.rawQuery("DELETE FROM classes WHERE _id=" +id, null);
-            rowID = database.delete("movies", "_id=" + id, null);
+            rowID = database.delete("movies", "dbID=" + id, null);
             close();
         }
     }
@@ -124,7 +193,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         if(open() != null){
             String createQuery = "CREATE TABLE movies" +
                     "(_id integer primary key autoincrement," +
-                    "title TEXT, date TEXT, genre TEXT, runtime TEXT, tagline TEXT, rating TEXT, poster TEXT, releaseDate TEXT);";
+                    "title TEXT, dbID TEXT, genre TEXT, runtime TEXT, tagline TEXT, rating TEXT, poster TEXT, releaseDate TEXT);";
             String dropQuery = "DROP TABLE movies";
             database.execSQL(dropQuery);
             database.execSQL(createQuery);
@@ -137,7 +206,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         Log.d("testing", "in onCreate dbhelper");
         String createQuery = "CREATE TABLE movies" +
                 "(_id integer primary key autoincrement," +
-                "title TEXT, date TEXT, genre TEXT, runtime TEXT, tagline TEXT, rating TEXT, poster TEXT, releaseDate TEXT);";
+                "title TEXT, dbID TEXT, genre TEXT, runtime TEXT, tagline TEXT, rating TEXT, poster TEXT, releaseDate TEXT);";
         db.execSQL(createQuery);
     }
 

@@ -41,9 +41,7 @@ class RecyclerAdapter (private val movies: ArrayList<Movies>, private val frag: 
         //4
         override fun onClick(v: View) {
             Log.d("RecyclerView", "CLICK!")
-            val context = itemView.context
             var m = this.movie
-            var db = DatabaseHelper(context, "Movies", null, 1)
             var api = TheMovieDBAPI();
             api.setSearchParams(m!!.id)
             val moviedetails = api.movieDetails().execute("")
@@ -51,13 +49,6 @@ class RecyclerAdapter (private val movies: ArrayList<Movies>, private val frag: 
             val movieDetails = api.resultPage
             val ma = frag.activity as MainActivity
             ma.showMovieDetails(movieDetails)
-
-
-            //db.insertMovie()
-            //val movie = movie.get(position);
-            //val showMovieIntent = Intent(context, PhotoActivity::class.java)
-            //showMovieIntent.putExtra(PHOTO_KEY, photo)
-            //context.startActivity(showMovieIntent)
         }
 
         companion object {
@@ -69,10 +60,8 @@ class RecyclerAdapter (private val movies: ArrayList<Movies>, private val frag: 
             this.movie = movie
             Picasso.with(view.context).load("http://image.tmdb.org/t/p/w500/" + movie.poster_path).into(view.imageView2)
             view.movieTitle.text = movie.title
-            //view.movietagline.text = ""
             view.movieReleaseDate.text = movie.release_date
-            view.movieRating.text = movie.vote_average
-            //view.movieGenre.text = movie.genre_ids.toString();
+            view.movieRating.text = movie.vote_average + "/10"
             view.movieGenre.text = "";
         }
     }
